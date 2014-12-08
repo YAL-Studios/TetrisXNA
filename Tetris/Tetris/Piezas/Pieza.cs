@@ -13,7 +13,7 @@ namespace Tetris.Piezas
         Texture2D texture;
         Vector2 position = new Vector2(0, 0);
         char[,] FIGURA_SELECT = new char[5, 5];
-
+        float time;
 
         #region FIGURA I | 1
         char[,,] FIGURA_I = new char[2, 5, 5] {
@@ -203,7 +203,7 @@ namespace Tetris.Piezas
             }
         }
 
-        public void Update(ref int _forma) {
+        public void Update(GameTime gameTime, ref int _forma) {
 
             if (figura <= 3 && _forma > 1) _forma = 0;
             if (figura <= 6 && _forma > 3) _forma = 0;
@@ -214,7 +214,12 @@ namespace Tetris.Piezas
             }
             formaAnt = forma;
 
-            position.Y++;
+            time += gameTime.ElapsedGameTime.Milliseconds;
+            if (time >= 1000)
+            {
+                position.Y += 32;
+                time = 0;
+            }
 
         }
         

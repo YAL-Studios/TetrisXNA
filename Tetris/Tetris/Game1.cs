@@ -47,7 +47,7 @@ namespace Tetris
         protected override void Update(GameTime gameTime) {
             kb = Keyboard.GetState();
             if (kbAnt.IsKeyUp(Keys.D) && kb.IsKeyDown(Keys.D)) forma++;
-                p.Update(ref forma);
+                p.Update(gameTime, ref forma);
             kbAnt = kb;
             base.Update(gameTime);
         }
