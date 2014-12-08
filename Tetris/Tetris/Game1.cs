@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using Tetris.Piezas;
 
 namespace Tetris
 {
@@ -16,10 +17,10 @@ namespace Tetris
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-
-        Texture2D texture;
-        Vector2 position = new Vector2(0,0);
-
+        Pieza p;
+        //TEMPORAL
+        int time = 1000, i = 1;
+        
         public Game1() {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -33,7 +34,7 @@ namespace Tetris
         //Cargar contenido
         protected override void LoadContent() {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            texture = Content.Load<Texture2D>("Player/player");
+            
         }
 
         //Descargar contenido
@@ -42,19 +43,22 @@ namespace Tetris
 
         //Actualizar
         protected override void Update(GameTime gameTime) {
-            #region da igual
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
-                this.Exit();
-            #endregion
-
+            time += gameTime.ElapsedGameTime.Milliseconds;
+            //Temporal | Solo para mostrar las diferentes piezas
+            if (time >= 1000) {
+                p = new Pieza(i);
+                p.LoadContent(Content);
+                i = (i < 5) ? i += 1 : 1;
+                time = 0;
+            }
             base.Update(gameTime);
         }
 
         //Dibujar
         protected override void Draw(GameTime gameTime) {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Gray);
             spriteBatch.Begin();
-            spriteBatch.Draw(texture, position, Color.White);
+            p.Draw(spriteBatch);
             spriteBatch.End();
             base.Draw(gameTime);
         }
