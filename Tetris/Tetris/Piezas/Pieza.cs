@@ -13,8 +13,8 @@ namespace Tetris.Piezas
         Texture2D texture;
         Vector2 position = new Vector2(300, 0);
         char[,] FIGURA_SELECT = new char[5, 5];
-        #region FIGURA I
-        char[,,] FORMAS_FIGURA_I = new char[2, 5, 5] {
+        #region FIGURA I | 1
+        char[,,] FIGURA_I = new char[2, 5, 5] {
             {
                 {'X', 'X', 'I', 'X', 'X'},
                 {'X', 'X', 'I', 'X', 'X'},
@@ -32,8 +32,44 @@ namespace Tetris.Piezas
             
         };
         #endregion
-        #region FIGURA T
-        char[, ,] FORMAS_FIGURA_T = new char[4, 5, 5] {
+        #region FIGURA S | 2
+        char[, ,] FIGURA_S = new char[2, 5, 5] {
+            {
+                {'X', 'X', 'X', 'X', 'X'},
+                {'X', 'X', 'I', 'I', 'X'},
+                {'X', 'I', 'I', 'X', 'X'},
+                {'X', 'X', 'X', 'X', 'X'},
+                {'X', 'X', 'X', 'X', 'X'}
+            },
+            {
+                {'X', 'X', 'X', 'X', 'X'},
+                {'X', 'I', 'X', 'X', 'X'},
+                {'X', 'I', 'I', 'X', 'X'},
+                {'X', 'X', 'I', 'X', 'X'},
+                {'X', 'X', 'X', 'X', 'X'}
+            }
+        };
+        #endregion
+        #region FIGURA Z | 3
+        char[, ,] FIGURA_Z = new char[2, 5, 5] {
+            {
+                {'X', 'X', 'X', 'X', 'X'},
+                {'X', 'X', 'X', 'X', 'X'},
+                {'X', 'I', 'I', 'X', 'X'},
+                {'X', 'X', 'I', 'I', 'X'},
+                {'X', 'X', 'X', 'X', 'X'}
+            },
+            {
+                {'X', 'X', 'X', 'X', 'X'},
+                {'X', 'X', 'X', 'I', 'X'},
+                {'X', 'X', 'I', 'I', 'X'},
+                {'X', 'X', 'I', 'X', 'X'},
+                {'X', 'X', 'X', 'X', 'X'}
+            }
+        };
+        #endregion
+        #region FIGURA T | 4
+        char[, ,] FIGURA_T = new char[4, 5, 5] {
             {
                 {'X', 'X', 'X', 'X', 'X'},
                 {'X', 'X', 'I', 'X', 'X'},
@@ -62,6 +98,79 @@ namespace Tetris.Piezas
                 {'X', 'X', 'I', 'X', 'X'},
                 {'X', 'X', 'X', 'X', 'X'}
             },
+        };
+        #endregion      
+        #region FIGURA L | 5
+        char[, ,] FIGURA_L = new char[4, 5, 5] {
+            {
+                {'X', 'X', 'X', 'X', 'X'},
+                {'X', 'X', 'I', 'X', 'X'},
+                {'X', 'X', 'I', 'X', 'X'},
+                {'X', 'X', 'I', 'I', 'X'},
+                {'X', 'X', 'X', 'X', 'X'}
+            },
+            {
+                {'X', 'X', 'X', 'X', 'X'},
+                {'X', 'X', 'X', 'X', 'X'},
+                {'X', 'I', 'I', 'I', 'X'},
+                {'X', 'I', 'X', 'X', 'X'},
+                {'X', 'X', 'X', 'X', 'X'}
+            },
+            {
+                {'X', 'X', 'X', 'X', 'X'},
+                {'X', 'I', 'I', 'X', 'X'},
+                {'X', 'X', 'I', 'X', 'X'},
+                {'X', 'X', 'I', 'X', 'X'},
+                {'X', 'X', 'X', 'X', 'X'}
+            },
+            {
+                {'X', 'X', 'X', 'X', 'X'},
+                {'X', 'X', 'X', 'I', 'X'},
+                {'X', 'I', 'I', 'I', 'X'},
+                {'X', 'X', 'X', 'X', 'X'},
+                {'X', 'X', 'X', 'X', 'X'}
+            }
+        };
+        #endregion
+        #region FIGURA J | 6
+        char[, ,] FIGURA_J = new char[4, 5, 5] {
+            {
+                {'X', 'X', 'X', 'X', 'X'},
+                {'X', 'X', 'I', 'X', 'X'},
+                {'X', 'X', 'I', 'X', 'X'},
+                {'X', 'I', 'I', 'X', 'X'},
+                {'X', 'X', 'X', 'X', 'X'}
+            },
+            {
+                {'X', 'X', 'X', 'X', 'X'},
+                {'X', 'I', 'X', 'X', 'X'},
+                {'X', 'I', 'I', 'I', 'X'},
+                {'X', 'X', 'X', 'X', 'X'},
+                {'X', 'X', 'X', 'X', 'X'}
+            },
+            {
+                {'X', 'X', 'X', 'X', 'X'},
+                {'X', 'X', 'I', 'I', 'X'},
+                {'X', 'X', 'I', 'X', 'X'},
+                {'X', 'X', 'I', 'X', 'X'},
+                {'X', 'X', 'X', 'X', 'X'}
+            },
+            {
+                {'X', 'X', 'X', 'X', 'X'},
+                {'X', 'X', 'X', 'X', 'X'},
+                {'X', 'I', 'I', 'I', 'X'},
+                {'X', 'X', 'X', 'I', 'X'},
+                {'X', 'X', 'X', 'X', 'X'}
+            }
+        };
+        #endregion
+        #region FIGURA O | 7
+        char[,] FIGURA_O = new char[5, 5] {
+            {'X', 'X', 'X', 'X', 'X'},
+            {'X', 'X', 'I', 'I', 'X'},
+            {'X', 'X', 'I', 'I', 'X'},
+            {'X', 'X', 'X', 'X', 'X'},
+            {'X', 'X', 'X', 'X', 'X'}
         };
         #endregion
         public Pieza(int _color, int _figura) {
@@ -92,8 +201,8 @@ namespace Tetris.Piezas
         }
 
         public void Update(ref int _forma) {
-            if (figura == 1 && _forma > 1) _forma = 0;
-            if (figura == 2 && _forma > 3) _forma = 0;
+            if (figura <= 3 && _forma > 1) _forma = 0;
+            if (figura <= 6 && _forma > 3) _forma = 0;
             forma = _forma;
             if (_forma != formaAnt) {
                 CopyMatrix();
@@ -123,24 +232,33 @@ namespace Tetris.Piezas
             }
         }
         void CopyMatrix() {
-            switch (figura) { 
-                case 1:
-                    for (int i = 0; i < 5; i++) {
-                        for (int j = 0; j < 5; j++) {
-                            FIGURA_SELECT[i, j] = FORMAS_FIGURA_I[forma, i, j];
-                        }
+            for (int i = 0; i < 5; i++) {
+                for (int j = 0; j < 5; j++) {
+                    switch (figura) { 
+                        case 1: // 2
+                            FIGURA_SELECT[i, j] = FIGURA_I[forma, i, j];
+                            break;
+                        case 2:
+                            FIGURA_SELECT[i, j] = FIGURA_S[forma, i, j];
+                            break;
+                        case 3:
+                            FIGURA_SELECT[i, j] = FIGURA_Z[forma, i, j];
+                            break;
+                        case 4:
+                            FIGURA_SELECT[i, j] = FIGURA_T[forma, i, j];
+                            break;
+                        case 5:
+                            FIGURA_SELECT[i, j] = FIGURA_L[forma, i, j];
+                            break;
+                        case 6:
+                            FIGURA_SELECT[i, j] = FIGURA_J[forma, i, j];
+                            break;
+                        case 7:
+                            FIGURA_SELECT[i, j] = FIGURA_O[i, j];
+                            break;
                     }
-                break;
-                case 2:
-                    for (int i = 0; i < 5; i++) {
-                        for (int j = 0; j < 5; j++)
-                        {
-                            FIGURA_SELECT[i, j] = FORMAS_FIGURA_T[forma, i, j];
-                        }
-                    }
-                break;
+                }   
             }
-            
         }
     }
 }
