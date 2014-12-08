@@ -17,10 +17,10 @@ namespace Tetris
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Pieza p;
-        //TEMPORAL
-        int time = 1000, i = 1;
-        
+        KeyboardState kb, kbAnt;
+        int forma;
+        Pieza p = new Pieza(2, 2);
+
         public Game1() {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -34,7 +34,7 @@ namespace Tetris
         //Cargar contenido
         protected override void LoadContent() {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            
+            p.LoadContent(Content);
         }
 
         //Descargar contenido
@@ -43,14 +43,10 @@ namespace Tetris
 
         //Actualizar
         protected override void Update(GameTime gameTime) {
-            time += gameTime.ElapsedGameTime.Milliseconds;
-            //Temporal | Solo para mostrar las diferentes piezas
-            if (time >= 1000) {
-                p = new Pieza(i);
-                p.LoadContent(Content);
-                i = (i < 5) ? i += 1 : 1;
-                time = 0;
-            }
+            kb = Keyboard.GetState();
+            if (kbAnt.IsKeyUp(Keys.D) && kb.IsKeyDown(Keys.D)) forma++;
+                p.Update(ref forma);
+            kbAnt = kb;
             base.Update(gameTime);
         }
 
