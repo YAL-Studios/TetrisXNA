@@ -73,7 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Piezas\Pieza.cs" />
-    <Compile Include="Piezas\Tablero.cs" />
+    <Compile Include="Tablero\Tablero.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
