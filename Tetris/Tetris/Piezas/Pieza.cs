@@ -176,6 +176,7 @@ namespace Tetris.Piezas
         };
         #endregion
         
+
         public Pieza(int _color, int _figura) {
             color = _color;
             figura = _figura;
