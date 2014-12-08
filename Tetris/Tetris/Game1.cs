@@ -23,14 +23,14 @@ namespace Tetris
             Content.RootDirectory = "Content";
         }
 
-
+        //Inicializar cosas
         protected override void Initialize()
         {
 
             base.Initialize();
         }
 
-
+        //Cargar contenido
         protected override void LoadContent()
         {
 
@@ -38,13 +38,13 @@ namespace Tetris
 
         }
 
-
+        //Descargar contenido
         protected override void UnloadContent()
         {
 
         }
 
-
+        //Actualizar
         protected override void Update(GameTime gameTime)
         {
 
@@ -55,6 +55,7 @@ namespace Tetris
             base.Update(gameTime);
         }
 
+        //Dibujar
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
