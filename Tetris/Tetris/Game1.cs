@@ -47,10 +47,10 @@ namespace Tetris
         //Actualizar
         protected override void Update(GameTime gameTime)
         {
-
+            #region da igual
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
-
+            #endregion
 
             base.Update(gameTime);
         }
