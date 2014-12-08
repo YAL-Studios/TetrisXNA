@@ -11,8 +11,10 @@ namespace Tetris.Piezas
     public class Pieza {
         int color, figura, forma, formaAnt;
         Texture2D texture;
-        Vector2 position = new Vector2(300, 0);
+        Vector2 position = new Vector2(0, 0);
         char[,] FIGURA_SELECT = new char[5, 5];
+
+
         #region FIGURA I | 1
         char[,,] FIGURA_I = new char[2, 5, 5] {
             {
@@ -173,6 +175,7 @@ namespace Tetris.Piezas
             {'X', 'X', 'X', 'X', 'X'}
         };
         #endregion
+        
         public Pieza(int _color, int _figura) {
             color = _color;
             figura = _figura;
@@ -201,6 +204,7 @@ namespace Tetris.Piezas
         }
 
         public void Update(ref int _forma) {
+
             if (figura <= 3 && _forma > 1) _forma = 0;
             if (figura <= 6 && _forma > 3) _forma = 0;
             forma = _forma;
@@ -209,13 +213,16 @@ namespace Tetris.Piezas
                 TMatrix();
             }
             formaAnt = forma;
+
+            position.Y++;
+
         }
         
         public void Draw(SpriteBatch spriteBatch) {
             for (int i = 0; i < 5; i++) {
                 for (int j = 0; j < 5; j++) {
                     if (FIGURA_SELECT[i, j] == 'I') {
-                        spriteBatch.Draw(texture, new Vector2(32 * i, 32 * j), Color.White);
+                        spriteBatch.Draw(texture, new Vector2(32 * i + position.X, 32 * j + position.Y), Color.White);
                     }
                 }
             }
@@ -231,6 +238,7 @@ namespace Tetris.Piezas
                 }
             }
         }
+
         void CopyMatrix() {
             for (int i = 0; i < 5; i++) {
                 for (int j = 0; j < 5; j++) {
