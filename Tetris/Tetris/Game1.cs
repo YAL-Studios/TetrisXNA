@@ -19,7 +19,9 @@ namespace Tetris
         SpriteBatch spriteBatch;
         KeyboardState kb, kbAnt;
         int forma;
+        //Creas una figura, El primer parametro define el color(1-5) y el segundo parametro define forma de la figura(1-2), por ahora solo hay 2(I y T)
         Pieza p = new Pieza(2, 2);
+        //Puedes rotar la figura presionando D
 
         public Game1() {
             graphics = new GraphicsDeviceManager(this);
