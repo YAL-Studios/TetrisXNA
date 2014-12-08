@@ -17,36 +17,31 @@ namespace Tetris
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        public Game1()
-        {
+        Texture2D texture;
+        Vector2 position = new Vector2(0,0);
+
+        public Game1() {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
         }
 
         //Inicializar cosas
-        protected override void Initialize()
-        {
-
+        protected override void Initialize() {
             base.Initialize();
         }
 
         //Cargar contenido
-        protected override void LoadContent()
-        {
-
+        protected override void LoadContent() {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            texture = Content.Load<Texture2D>("Player/player");
         }
 
         //Descargar contenido
-        protected override void UnloadContent()
-        {
-
+        protected override void UnloadContent() {
         }
 
         //Actualizar
-        protected override void Update(GameTime gameTime)
-        {
+        protected override void Update(GameTime gameTime) {
             #region da igual
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
@@ -56,11 +51,11 @@ namespace Tetris
         }
 
         //Dibujar
-        protected override void Draw(GameTime gameTime)
-        {
+        protected override void Draw(GameTime gameTime) {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
-
+            spriteBatch.Begin();
+            spriteBatch.Draw(texture, position, Color.White);
+            spriteBatch.End();
             base.Draw(gameTime);
         }
     }
