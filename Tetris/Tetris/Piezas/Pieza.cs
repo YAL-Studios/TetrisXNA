@@ -11,7 +11,6 @@ namespace Tetris.Piezas
 {
     public class Pieza {
         public int color, figura, forma, formaAnt;
-        public float wall = 8;
         Texture2D texture;
         KeyboardState kb, kbAnt;
         
