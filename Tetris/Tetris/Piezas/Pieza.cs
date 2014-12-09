@@ -211,7 +211,16 @@ namespace Tetris.Piezas
 
         public void Update(GameTime gameTime) {
             kb = Keyboard.GetState();
-            if (kbAnt.IsKeyUp(Keys.Space) && kb.IsKeyDown(Keys.Space)) forma++;
+            if (kbAnt.IsKeyUp(Keys.Space) && kb.IsKeyDown(Keys.Space))
+            {
+                if (position.X < 8)
+                    Right = true;
+                else position.X = 7;
+                if (position.X > 0)
+                    Left = true;
+                else position.X = 0;
+                forma++;
+            }
             if (kbAnt.IsKeyUp(Keys.D) && kb.IsKeyDown(Keys.D) && Right && Enabled /*&& position.X+1 < wall*/ /*&& Enabled && position.X < 8*/)
             {
                 Left = true;
