@@ -11,8 +11,8 @@ namespace Tetris.Piezas
     public class Pieza {
         int color, figura, forma, formaAnt;
         Texture2D texture;
-        public Vector2 position = new Vector2(32, 0);
-        char[,] FIGURA_SELECT = new char[5, 5];
+        public Vector2 position = new Vector2(1, 0);
+        public char[,] FIGURA_SELECT = new char[5, 5];
         float time;
 
         #region FIGURA I | 1
@@ -204,7 +204,7 @@ namespace Tetris.Piezas
             }
         }
 
-        public void Update(GameTime gameTime, ref int _forma) {
+        public void Update(GameTime gameTime, ref int _forma, bool active) {
 
             if (figura <= 3 && _forma > 1) _forma = 0;
             if (figura <= 6 && _forma > 3) _forma = 0;
@@ -216,9 +216,8 @@ namespace Tetris.Piezas
             formaAnt = forma;
 
             time += gameTime.ElapsedGameTime.Milliseconds;
-            if (time >= 1000)
-            {
-                position.Y += 32;
+            if (time >= 1000 && active) {
+                position.Y += 1;
                 time = 0;
             }
 
@@ -228,7 +227,7 @@ namespace Tetris.Piezas
             for (int i = 0; i < 5; i++) {
                 for (int j = 0; j < 5; j++) {
                     if (FIGURA_SELECT[i, j] == 'I') {
-                        spriteBatch.Draw(texture, new Vector2(32 * i + position.X, 32 * j + position.Y), Color.White);
+                        spriteBatch.Draw(texture, new Vector2(32 * (i + position.X), 32 * (j + position.Y)), Color.White);
                     }
                 }
             }

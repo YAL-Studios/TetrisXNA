@@ -12,6 +12,7 @@ namespace Tetris.Table
     {
         Texture2D fondo, marco;
         Vector2 posFigura;
+        char[,] figura;
         char[,] tablero = new char[22, 12] { 
         #region Inicializacion del tablero
         { 'U', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'U'},
@@ -20,7 +21,7 @@ namespace Tetris.Table
         { 'U', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'U'},
         { 'U', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'U'},
         { 'U', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'U'},
-        { 'U', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'U'},
+        { 'U', 'X', 'X', 'X', '1', 'X', 'X', 'X', 'X', 'X', 'X', 'U'},
         { 'U', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'U'},
         { 'U', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'U'},
         { 'U', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'U'},
@@ -47,15 +48,21 @@ namespace Tetris.Table
             marco = Content.Load<Texture2D>("Tablero/Marco");
         }
 
-        public void Update(ref Vector2 _posFigura)
+        public bool Update(ref Vector2 _posFigura, char[,] _figura)
         {
-            posFigura.X = _posFigura.X / 32;
-            posFigura.Y = _posFigura.Y / 32;
-
-            if (tablero[(int)posFigura.Y, (int)posFigura.X] == 'U')
-            {
-                _posFigura.Y = 0;
+            posFigura.X = _posFigura.X;
+            posFigura.Y = _posFigura.Y;
+            figura = _figura;
+            for (int i = 0; i < 5; i++) {
+                for (int j = 0; j < 5; j++) {
+                    if (figura[i, j] == 'I') {
+                        if (tablero[(j + (int)posFigura.Y) + 1, (i + (int)posFigura.X)] != 'X') {
+                            return false;
+                        }
+                    }
+                }
             }
+            return true;
         }
 
         public void Draw(SpriteBatch spriteBatch)
