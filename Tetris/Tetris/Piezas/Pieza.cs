@@ -11,6 +11,7 @@ namespace Tetris.Piezas
 {
     public class Pieza {
         public int color, figura, forma, formaAnt;
+        public float wall = 8;
         Texture2D texture;
         KeyboardState kb, kbAnt;
         
@@ -211,8 +212,8 @@ namespace Tetris.Piezas
         public void Update(GameTime gameTime) {
             kb = Keyboard.GetState();
             if (kbAnt.IsKeyUp(Keys.Space) && kb.IsKeyDown(Keys.Space)) forma++;
-            if (kbAnt.IsKeyUp(Keys.D) && kb.IsKeyDown(Keys.D) && Enabled && position.X < 8) position.X++;
-            if (kbAnt.IsKeyUp(Keys.A) && kb.IsKeyDown(Keys.A) && Enabled && position.X > 0) position.X--;
+            if (kbAnt.IsKeyUp(Keys.D) && kb.IsKeyDown(Keys.D) && Enabled /*&& position.X+1 < wall*/) position.X++;
+            if (kbAnt.IsKeyUp(Keys.A) && kb.IsKeyDown(Keys.A) && Enabled /*&& position.X > 0*/) position.X--;
             kbAnt = kb;
             if (figura <= 3 && forma > 1) forma = 0;
             if (figura <= 6 && forma > 3) forma = 0;

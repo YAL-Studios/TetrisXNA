@@ -53,10 +53,20 @@ namespace Tetris.Table
             for (int i = 0; i < 5; i++) {
                 for (int j = 0; j < 5; j++) {
                     if (p.FIGURA_SELECT[i, j] == 'I') {
-                        if (tablero[(j + (int)p.position.Y) + 1, (i + (int)p.position.X)] != 'X' && (j + (int)p.position.Y) + 1 >= 20)
+                        if (tablero[(j + (int)p.position.Y) + 1, (i + (int)p.position.X)] != 'X')
                         {
                             p.Enabled = false;
                             
+                        }
+                        if (tablero[(j + (int)p.position.Y) + 1, (i + (int)p.position.X)] == 'X' && (i + (int)p.position.X)+1 > 10)
+                        {
+                            //p.wall = p.position.X;
+                            p.Enabled = false;
+                        }
+                        if (tablero[(j + (int)p.position.Y) + 1, (i + (int)p.position.X)] == 'X' && (i + (int)p.position.X) - 1 <= 0)
+                        {
+
+                            p.Enabled = false;
                         }
                     }
                 }
