@@ -15,10 +15,10 @@ namespace Tetris.Piezas
         Texture2D texture;
         KeyboardState kb, kbAnt;
         
-        public Vector2 position = new Vector2(1, 0);
+        public Vector2 position = new Vector2(4, 0);
         public char[,] FIGURA_SELECT = new char[5, 5];
         float time;
-        public bool Enabled = true, Right = true, Left = true;
+        public bool Enabled = true;
 
         #region FIGURA I | 1
         char[,,] FIGURA_I = new char[2, 5, 5] {
@@ -211,26 +211,9 @@ namespace Tetris.Piezas
 
         public void Update(GameTime gameTime) {
             kb = Keyboard.GetState();
-            if (kbAnt.IsKeyUp(Keys.Space) && kb.IsKeyDown(Keys.Space))
-            {
-                if (position.X < 8)
-                    Right = true;
-                else position.X = 7;
-                if (position.X > 0)
-                    Left = true;
-                else position.X = 0;
-                forma++;
-            }
-            if (kbAnt.IsKeyUp(Keys.D) && kb.IsKeyDown(Keys.D) && Right && Enabled /*&& position.X+1 < wall*/ /*&& Enabled && position.X < 8*/)
-            {
-                Left = true;
-                position.X++;
-            }
-            if (kbAnt.IsKeyUp(Keys.A) && kb.IsKeyDown(Keys.A) && Left && Enabled /*&& position.X > 0*/ /*&& Enabled &&  position.X > 0*/)
-            {
-                Right = true;
-                position.X--;
-            }
+            if (kbAnt.IsKeyUp(Keys.Space) && kb.IsKeyDown(Keys.Space)) forma++;
+            if (kbAnt.IsKeyUp(Keys.D) && kb.IsKeyDown(Keys.D) && Enabled && position.X < 8 ) position.X++;
+            if (kbAnt.IsKeyUp(Keys.A) && kb.IsKeyDown(Keys.A) && Enabled && position.X > 0) position.X--;
             kbAnt = kb;
             if (figura <= 3 && forma > 1) forma = 0;
             if (figura <= 6 && forma > 3) forma = 0;

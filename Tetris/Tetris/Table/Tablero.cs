@@ -58,16 +58,7 @@ namespace Tetris.Table
                             p.Enabled = false;
                             
                         }
-                        if (tablero[(j + (int)p.position.Y) + 1, (i + (int)p.position.X)] == 'X' && (i + (int)p.position.X) + 1 > 10)
-                        {
-                            
-                            p.Right = false;
-                        }
-                        if (tablero[(j + (int)p.position.Y) + 1, (i + (int)p.position.X)] == 'X' && (i + (int)p.position.X) - 1 <= 0)
-                        {
 
-                            p.Left = false;
-                        }
                     }
                 }
             }

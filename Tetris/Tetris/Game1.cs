@@ -21,7 +21,7 @@ namespace Tetris
         KeyboardState kb, kbAnt;
         int forma;
         //Creas una figura, El primer parametro define el color(1-5) y el segundo parametro define forma de la figura(1-7)
-        Pieza p = new Pieza(5, 2);
+        Pieza p = new Pieza(5, 7);
         //Puedes rotar la figura presionando D
         Tablero t = new Tablero();
 
