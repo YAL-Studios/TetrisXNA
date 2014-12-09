@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Tetris.Piezas;
 
 namespace Tetris.Table
 {
@@ -48,21 +49,21 @@ namespace Tetris.Table
             marco = Content.Load<Texture2D>("Tablero/Marco");
         }
 
-        public bool Update(Vector2 _posFigura, char[,] _figura)
+        public void Update(Pieza p)
         {
-            posFigura.X = _posFigura.X;
-            posFigura.Y = _posFigura.Y;
-            figura = _figura;
+
             for (int i = 0; i < 5; i++) {
                 for (int j = 0; j < 5; j++) {
-                    if (figura[i, j] == 'I') {
-                        if (tablero[(j + (int)posFigura.Y) + 1, (i + (int)posFigura.X)] != 'X') {
-                            return false;
+                    if (p.FIGURA_SELECT[i, j] == 'I') {
+                        if (tablero[(j + (int)p.position.Y) + 1, (i + (int)p.position.X)] != 'X')
+                        {
+                            p.Enabled = false;
+                            
                         }
                     }
                 }
             }
-            return true;
+            p.Enabled = true;
         }
 
         public void Draw(SpriteBatch spriteBatch)

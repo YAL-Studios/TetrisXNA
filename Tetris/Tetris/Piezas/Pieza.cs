@@ -10,13 +10,14 @@ using System.Text;
 namespace Tetris.Piezas
 {
     public class Pieza {
-        int color, figura, forma, formaAnt;
+        public int color, figura, forma, formaAnt;
         Texture2D texture;
         KeyboardState kb, kbAnt;
         
         public Vector2 position = new Vector2(1, 0);
         public char[,] FIGURA_SELECT = new char[5, 5];
         float time;
+        public bool Enabled;
 
         #region FIGURA I | 1
         char[,,] FIGURA_I = new char[2, 5, 5] {
@@ -207,7 +208,7 @@ namespace Tetris.Piezas
             }
         }
 
-        public void Update(GameTime gameTime, bool active) {
+        public void Update(GameTime gameTime) {
             kb = Keyboard.GetState();
             if (kbAnt.IsKeyUp(Keys.Space) && kb.IsKeyDown(Keys.Space)) forma++;
             if (kbAnt.IsKeyUp(Keys.D) && kb.IsKeyDown(Keys.D)) position.X++;
@@ -224,7 +225,7 @@ namespace Tetris.Piezas
             
 
             time += gameTime.ElapsedGameTime.Milliseconds;
-            if (time >= 1000 && active) {
+            if (time >= 1000 && Enabled) {
                 position.Y += 1;
                 time = 0;
             }
