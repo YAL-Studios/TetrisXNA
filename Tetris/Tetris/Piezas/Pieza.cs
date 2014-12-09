@@ -17,7 +17,7 @@ namespace Tetris.Piezas
         public Vector2 position = new Vector2(1, 0);
         public char[,] FIGURA_SELECT = new char[5, 5];
         float time;
-        public bool Enabled;
+        public bool Enabled = true;
 
         #region FIGURA I | 1
         char[,,] FIGURA_I = new char[2, 5, 5] {
@@ -211,8 +211,8 @@ namespace Tetris.Piezas
         public void Update(GameTime gameTime) {
             kb = Keyboard.GetState();
             if (kbAnt.IsKeyUp(Keys.Space) && kb.IsKeyDown(Keys.Space)) forma++;
-            if (kbAnt.IsKeyUp(Keys.D) && kb.IsKeyDown(Keys.D)) position.X++;
-            if (kbAnt.IsKeyUp(Keys.A) && kb.IsKeyDown(Keys.A)) position.X--;
+            if (kbAnt.IsKeyUp(Keys.D) && kb.IsKeyDown(Keys.D) && Enabled && position.X < 8) position.X++;
+            if (kbAnt.IsKeyUp(Keys.A) && kb.IsKeyDown(Keys.A) && Enabled && position.X > 0) position.X--;
             kbAnt = kb;
             if (figura <= 3 && forma > 1) forma = 0;
             if (figura <= 6 && forma > 3) forma = 0;

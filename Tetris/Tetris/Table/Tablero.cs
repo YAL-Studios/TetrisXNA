@@ -12,8 +12,6 @@ namespace Tetris.Table
     public class Tablero
     {
         Texture2D fondo, marco;
-        Vector2 posFigura;
-        char[,] figura;
         char[,] tablero = new char[22, 12] { 
         #region Inicializacion del tablero
         { 'U', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'U'},
@@ -55,7 +53,7 @@ namespace Tetris.Table
             for (int i = 0; i < 5; i++) {
                 for (int j = 0; j < 5; j++) {
                     if (p.FIGURA_SELECT[i, j] == 'I') {
-                        if (tablero[(j + (int)p.position.Y) + 1, (i + (int)p.position.X)] != 'X')
+                        if (tablero[(j + (int)p.position.Y) + 1, (i + (int)p.position.X)] != 'X' && (j + (int)p.position.Y) + 1 >= 20)
                         {
                             p.Enabled = false;
                             
@@ -63,7 +61,6 @@ namespace Tetris.Table
                     }
                 }
             }
-            p.Enabled = true;
         }
 
         public void Draw(SpriteBatch spriteBatch)
