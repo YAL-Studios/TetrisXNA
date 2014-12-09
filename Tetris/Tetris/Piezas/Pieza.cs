@@ -11,7 +11,7 @@ namespace Tetris.Piezas
     public class Pieza {
         int color, figura, forma, formaAnt;
         Texture2D texture;
-        Vector2 position = new Vector2(0, 0);
+        public Vector2 position = new Vector2(32, 0);
         char[,] FIGURA_SELECT = new char[5, 5];
         float time;
 
