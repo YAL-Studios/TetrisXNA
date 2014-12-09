@@ -48,7 +48,7 @@ namespace Tetris.Table
             marco = Content.Load<Texture2D>("Tablero/Marco");
         }
 
-        public bool Update(ref Vector2 _posFigura, char[,] _figura)
+        public bool Update(Vector2 _posFigura, char[,] _figura)
         {
             posFigura.X = _posFigura.X;
             posFigura.Y = _posFigura.Y;

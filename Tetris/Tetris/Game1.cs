@@ -50,10 +50,9 @@ namespace Tetris
 
         //Actualizar
         protected override void Update(GameTime gameTime) {
-            kb = Keyboard.GetState();
-            if (kbAnt.IsKeyUp(Keys.D) && kb.IsKeyDown(Keys.D)) forma++;
-            p.Update(gameTime, ref forma, t.Update(ref p.position, p.FIGURA_SELECT));
-            kbAnt = kb;
+         
+            p.Update(gameTime, t.Update(p.position, p.FIGURA_SELECT));
+         
             base.Update(gameTime);
         }
 

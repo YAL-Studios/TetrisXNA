@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,8 @@ namespace Tetris.Piezas
     public class Pieza {
         int color, figura, forma, formaAnt;
         Texture2D texture;
+        KeyboardState kb, kbAnt;
+        
         public Vector2 position = new Vector2(1, 0);
         public char[,] FIGURA_SELECT = new char[5, 5];
         float time;
@@ -204,16 +207,21 @@ namespace Tetris.Piezas
             }
         }
 
-        public void Update(GameTime gameTime, ref int _forma, bool active) {
-
-            if (figura <= 3 && _forma > 1) _forma = 0;
-            if (figura <= 6 && _forma > 3) _forma = 0;
-            forma = _forma;
-            if (_forma != formaAnt) {
+        public void Update(GameTime gameTime, bool active) {
+            kb = Keyboard.GetState();
+            if (kbAnt.IsKeyUp(Keys.Space) && kb.IsKeyDown(Keys.Space)) forma++;
+            if (kbAnt.IsKeyUp(Keys.D) && kb.IsKeyDown(Keys.D)) position.X++;
+            if (kbAnt.IsKeyUp(Keys.D) && kb.IsKeyDown(Keys.D)) position.X--;
+            kbAnt = kb;
+            if (figura <= 3 && forma > 1) forma = 0;
+            if (figura <= 6 && forma > 3) forma = 0;
+            if (forma != formaAnt) {
                 CopyMatrix();
                 TMatrix();
             }
             formaAnt = forma;
+
+            
 
             time += gameTime.ElapsedGameTime.Milliseconds;
             if (time >= 1000 && active) {
