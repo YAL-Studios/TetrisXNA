@@ -13,11 +13,11 @@ namespace Tetris.Piezas
         public int color, figura, forma, formaAnt;
         Texture2D texture;
         KeyboardState kb, kbAnt;
-        
-        public Vector2 position = new Vector2(4, 0);
+        public Vector2 position = new Vector2(0, 0);
         public char[,] FIGURA_SELECT = new char[5, 5];
+        public char[,] NEXT_FIG = new char[5, 5];
         float time;
-        public bool Enabled = true;
+        public bool Enabled = true, FR = true, FL = true, cReq;
 
         #region FIGURA I | 1
         char[,,] FIGURA_I = new char[2, 5, 5] {
@@ -88,7 +88,7 @@ namespace Tetris.Piezas
                 {'X', 'X', 'I', 'X', 'X'},
                 {'X', 'X', 'I', 'I', 'X'},
                 {'X', 'X', 'I', 'X', 'X'},
-                {'X', 'X', 'X', 'X', 'X'}
+                {'X', 'X', 'X', 'X', 'X'}                                                          
             },
             {
                 {'X', 'X', 'X', 'X', 'X'},
@@ -210,9 +210,14 @@ namespace Tetris.Piezas
 
         public void Update(GameTime gameTime) {
             kb = Keyboard.GetState();
-            if (kbAnt.IsKeyUp(Keys.Space) && kb.IsKeyDown(Keys.Space)) forma++;
-            if (kbAnt.IsKeyUp(Keys.D) && kb.IsKeyDown(Keys.D) && Enabled && position.X < 8 ) position.X++;
-            if (kbAnt.IsKeyUp(Keys.A) && kb.IsKeyDown(Keys.A) && Enabled && position.X > 0) position.X--;
+            if (kbAnt.IsKeyUp(Keys.Space) && kb.IsKeyDown(Keys.Space) && Enabled) cReq = true;
+            if (kbAnt.IsKeyUp(Keys.D) && kb.IsKeyDown(Keys.D) && Enabled && FR) {
+                position.X++;
+            }
+            if (kbAnt.IsKeyUp(Keys.A) && kb.IsKeyDown(Keys.A) && Enabled && FL) {
+                if (position.X > -1)
+                position.X--;
+            } 
             kbAnt = kb;
             if (figura <= 3 && forma > 1) forma = 0;
             if (figura <= 6 && forma > 3) forma = 0;
@@ -225,7 +230,7 @@ namespace Tetris.Piezas
             
 
             time += gameTime.ElapsedGameTime.Milliseconds;
-            if (time >= 1000 && Enabled) {
+            if (time >= 2000 && Enabled) {
                 position.Y += 1;
                 time = 0;
             }
@@ -254,29 +259,43 @@ namespace Tetris.Piezas
         }
 
         void CopyMatrix() {
+            int f;
             for (int i = 0; i < 5; i++) {
                 for (int j = 0; j < 5; j++) {
                     switch (figura) { 
                         case 1: // 2
                             FIGURA_SELECT[i, j] = FIGURA_I[forma, i, j];
+                            f = forma > 0 ? 0 : 1;
+                            NEXT_FIG[i, j] = FIGURA_I[f, i, j];
                             break;
                         case 2:
                             FIGURA_SELECT[i, j] = FIGURA_S[forma, i, j];
+                            f = forma > 0 ? 0 : 1;
+                            NEXT_FIG[i, j] = FIGURA_S[f, i, j];
                             break;
                         case 3:
                             FIGURA_SELECT[i, j] = FIGURA_Z[forma, i, j];
+                            f = forma > 0 ? 0 : 1;
+                            NEXT_FIG[i, j] = FIGURA_Z[f, i, j];
                             break;
                         case 4:
                             FIGURA_SELECT[i, j] = FIGURA_T[forma, i, j];
+                            f = forma > 2 ? 0 : forma + 1;
+                            NEXT_FIG[i, j] = FIGURA_T[f, i, j];
                             break;
                         case 5:
                             FIGURA_SELECT[i, j] = FIGURA_L[forma, i, j];
+                            f = forma > 2 ? 0 : forma + 1;
+                            NEXT_FIG[i, j] = FIGURA_L[f, i, j];
                             break;
                         case 6:
                             FIGURA_SELECT[i, j] = FIGURA_J[forma, i, j];
+                            f = forma > 2 ? 0 : forma + 1;
+                            NEXT_FIG[i, j] = FIGURA_J[f, i, j];
                             break;
                         case 7:
                             FIGURA_SELECT[i, j] = FIGURA_O[i, j];
+                            NEXT_FIG[i, j] = FIGURA_O[i, j];
                             break;
                     }
                 }   

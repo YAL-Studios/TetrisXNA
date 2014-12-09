@@ -19,7 +19,7 @@ namespace Tetris
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         //Creas una figura, El primer parametro define el color(1-5) y el segundo parametro define forma de la figura(1-7)
-        Pieza p = new Pieza(5, 1);
+        Pieza p = new Pieza(5, 7);
         //Puedes rotar la figura presionando D
         Tablero t = new Tablero();
 
@@ -48,9 +48,10 @@ namespace Tetris
 
         //Actualizar
         protected override void Update(GameTime gameTime) {
-         
+            
             p.Update(gameTime);
             t.Update(p);
+            
             base.Update(gameTime);
         }
 
