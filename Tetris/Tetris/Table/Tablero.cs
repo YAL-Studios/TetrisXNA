@@ -56,7 +56,7 @@ namespace Tetris.Table
                         if (p.cReq) {
                             if (i + (int)p.position.X > 0 && i < 3) { 
                                 if (tablero[(j + (int)p.position.Y), (i + (int)p.position.X)] == 'U') {
-                                    p.position.X++;
+                                    //p.position.X++;
                                 } else pt++;
                             }
                             else {
