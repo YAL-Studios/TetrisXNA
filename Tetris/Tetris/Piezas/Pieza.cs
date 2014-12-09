@@ -211,7 +211,7 @@ namespace Tetris.Piezas
             kb = Keyboard.GetState();
             if (kbAnt.IsKeyUp(Keys.Space) && kb.IsKeyDown(Keys.Space)) forma++;
             if (kbAnt.IsKeyUp(Keys.D) && kb.IsKeyDown(Keys.D)) position.X++;
-            if (kbAnt.IsKeyUp(Keys.D) && kb.IsKeyDown(Keys.D)) position.X--;
+            if (kbAnt.IsKeyUp(Keys.A) && kb.IsKeyDown(Keys.A)) position.X--;
             kbAnt = kb;
             if (figura <= 3 && forma > 1) forma = 0;
             if (figura <= 6 && forma > 3) forma = 0;
