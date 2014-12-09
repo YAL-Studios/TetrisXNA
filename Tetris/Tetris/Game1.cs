@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Tetris.Piezas;
+using Tetris.Table;
 
 namespace Tetris
 {
@@ -22,9 +23,12 @@ namespace Tetris
         //Creas una figura, El primer parametro define el color(1-5) y el segundo parametro define forma de la figura(1-7)
         Pieza p = new Pieza(5, 1);
         //Puedes rotar la figura presionando D
+        Tablero t = new Tablero();
 
         public Game1() {
             graphics = new GraphicsDeviceManager(this);
+            graphics.PreferredBackBufferWidth = 384;
+            graphics.PreferredBackBufferHeight = 704;
             Content.RootDirectory = "Content";
         }
 
@@ -37,6 +41,7 @@ namespace Tetris
         protected override void LoadContent() {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             p.LoadContent(Content);
+            t.LoadContent(Content);
         }
 
         //Descargar contenido
@@ -56,6 +61,7 @@ namespace Tetris
         protected override void Draw(GameTime gameTime) {
             GraphicsDevice.Clear(Color.Gray);
             spriteBatch.Begin();
+            t.Draw(spriteBatch);
             p.Draw(spriteBatch);
             spriteBatch.End();
             base.Draw(gameTime);
