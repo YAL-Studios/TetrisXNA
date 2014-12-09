@@ -52,7 +52,7 @@ namespace Tetris.Table
             posFigura.X = _posFigura.X / 32;
             posFigura.Y = _posFigura.Y / 32;
 
-            if (tablero[(int)posFigura.X, (int)posFigura.Y] == 'U')
+            if (tablero[(int)posFigura.Y, (int)posFigura.X] == 'U')
             {
                 _posFigura.Y = 0;
             }
