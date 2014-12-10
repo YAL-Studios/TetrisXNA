@@ -219,7 +219,7 @@ namespace Tetris.Piezas
             } else lastMovesTimer = 0;
 
             kb = Keyboard.GetState();
-            if (kbAnt.IsKeyUp(Keys.Space) && kb.IsKeyDown(Keys.Space) && Enabled) cReq = true;
+            if (kbAnt.IsKeyUp(Keys.Space) && kb.IsKeyDown(Keys.Space) && Enabled) forma++; //cReq = true;
             if (kbAnt.IsKeyUp(Keys.D) && kb.IsKeyDown(Keys.D) && Enabled && FR) {
                 position.X++;
             }
