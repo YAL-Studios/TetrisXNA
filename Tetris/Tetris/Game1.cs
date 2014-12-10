@@ -53,7 +53,7 @@ namespace Tetris
 
             if (Land) {
                 r = new Random();              
-                p = new Pieza(r.Next(1,5), r.Next(1, 7));
+                p = new Pieza(r.Next(1, 6), r.Next(1, 8));
                 p.LoadContent(Content);
             }
             Land = p.Update(gameTime);
