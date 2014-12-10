@@ -87,9 +87,11 @@ namespace Tetris.Table
                         if ((i + (int)p.position.X) > 0) { 
                             if (tablero[(j + (int)p.position.Y) + 1, (i + (int)p.position.X)] != 'X' &&
                                 tablero[(j + (int)p.position.Y) + 1, (i + (int)p.position.X)] != 'U') {
-                                p.Enabled = false;
-                                CopyTo(p.color, p.FIGURA_SELECT, p.position);
-                            }
+                                //p.Enabled = false;
+                                p.LastMoves(true);
+                                if(!p.Enabled) CopyTo(p.color, p.FIGURA_SELECT, p.position);
+                            } else  p.LastMoves(false);
+
                         } else p.position.X++;
                         
                         if (i + (int)p.position.X > 0) {
@@ -125,6 +127,7 @@ namespace Tetris.Table
                 }
             }
         }
+
         void CopyTo(int _color, char[,] fig, Vector2 pos) {
             color = _color;
             for (int i = 0; i < 5; i++) {
