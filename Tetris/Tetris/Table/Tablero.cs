@@ -87,10 +87,10 @@ namespace Tetris.Table
                         if ((i + (int)p.position.X) > 0) { 
                             if (tablero[(j + (int)p.position.Y) + 1, (i + (int)p.position.X)] != 'X' &&
                                 tablero[(j + (int)p.position.Y) + 1, (i + (int)p.position.X)] != 'U') {
-                                //p.Enabled = false;
-                                p.LastMoves(true);
-                                if(!p.Enabled) CopyTo(p.color, p.FIGURA_SELECT, p.position);
-                            } else  p.LastMoves(false);
+                                p.Enabled = false;
+                                //p.LastMoves(true);
+                                 CopyTo(p.color, p.FIGURA_SELECT, p.position);
+                            } //else  p.LastMoves(false);
 
                         } else p.position.X++;
                         
