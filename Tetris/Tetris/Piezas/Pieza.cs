@@ -210,7 +210,7 @@ namespace Tetris.Piezas
 
         public bool Update(GameTime gameTime) {
             kb = Keyboard.GetState();
-            if (kbAnt.IsKeyUp(Keys.Space) && kb.IsKeyDown(Keys.Space) && Enabled) forma++; //cReq = true;
+            if (kbAnt.IsKeyUp(Keys.Space) && kb.IsKeyDown(Keys.Space) && Enabled) forma+=1; //cReq = true;
             if (kbAnt.IsKeyUp(Keys.D) && kb.IsKeyDown(Keys.D) && Enabled && FR) {
                 position.X++;
             }
@@ -230,7 +230,7 @@ namespace Tetris.Piezas
             
 
             time += gameTime.ElapsedGameTime.Milliseconds;
-            if (time >= 2000 && Enabled) {
+            if (time >= 200 && Enabled) {
                 position.Y += 1;
                 time = 0;
             }
