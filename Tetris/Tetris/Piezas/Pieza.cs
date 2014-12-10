@@ -208,7 +208,7 @@ namespace Tetris.Piezas
             }
         }
 
-        public void Update(GameTime gameTime) {
+        public bool Update(GameTime gameTime) {
             kb = Keyboard.GetState();
             if (kbAnt.IsKeyUp(Keys.Space) && kb.IsKeyDown(Keys.Space) && Enabled) cReq = true;
             if (kbAnt.IsKeyUp(Keys.D) && kb.IsKeyDown(Keys.D) && Enabled && FR) {
@@ -230,17 +230,19 @@ namespace Tetris.Piezas
             
 
             time += gameTime.ElapsedGameTime.Milliseconds;
-            if (time >= 2000 && Enabled) {
+            if (time >= 200 && Enabled) {
                 position.Y += 1;
                 time = 0;
             }
+            if (!Enabled) return true;
+            return false;
 
         }
         
         public void Draw(SpriteBatch spriteBatch) {
             for (int i = 0; i < 5; i++) {
                 for (int j = 0; j < 5; j++) {
-                    if (FIGURA_SELECT[i, j] == 'I') {
+                    if (FIGURA_SELECT[i, j] == 'I' && Enabled) {
                         spriteBatch.Draw(texture, new Vector2(32 * (i + position.X), 32 * (j + position.Y)), Color.White);
                     }
                 }

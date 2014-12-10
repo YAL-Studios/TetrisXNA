@@ -19,9 +19,11 @@ namespace Tetris
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         //Creas una figura, El primer parametro define el color(1-5) y el segundo parametro define forma de la figura(1-7)
-        Pieza p = new Pieza(5, 7);
+        Pieza p;// = new Pieza(1, 1);
         //Puedes rotar la figura presionando D
         Tablero t = new Tablero();
+        Random r;
+        bool Land = true;
 
         public Game1() {
             graphics = new GraphicsDeviceManager(this);
@@ -38,7 +40,7 @@ namespace Tetris
         //Cargar contenido
         protected override void LoadContent() {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            p.LoadContent(Content);
+            
             t.LoadContent(Content);
         }
 
@@ -48,8 +50,15 @@ namespace Tetris
 
         //Actualizar
         protected override void Update(GameTime gameTime) {
-            
-            p.Update(gameTime);
+
+            if (Land) {
+                r = new Random();
+                
+                p = new Pieza(r.Next(1,5), r.Next(1, 7));
+                p.LoadContent(Content);
+                //Land = false;
+            }
+            Land = p.Update(gameTime);
             t.Update(p);
             
             base.Update(gameTime);
@@ -60,7 +69,8 @@ namespace Tetris
             GraphicsDevice.Clear(Color.Gray);
             spriteBatch.Begin();
             t.Draw(spriteBatch);
-            p.Draw(spriteBatch);
+            if (!Land)
+                p.Draw(spriteBatch);
             spriteBatch.End();
             base.Draw(gameTime);
         }
