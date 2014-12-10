@@ -23,9 +23,9 @@ namespace Tetris
         //Puedes rotar la figura presionando D
         Tablero t = new Tablero();
         Random r;
-        bool Land = true;
+        bool Land = true, gameOver = false;
 
-        public Game1() {
+        public Game1 () {
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferWidth = 384;
             graphics.PreferredBackBufferHeight = 704;
@@ -49,17 +49,19 @@ namespace Tetris
         }
 
         //Actualizar
-        protected override void Update(GameTime gameTime) {
+        protected override void Update (GameTime gameTime) {
+            if (!gameOver) { 
 
-            if (Land) {
-                r = new Random();              
-                p = new Pieza(r.Next(1, 6), r.Next(1, 8));
-                p.LoadContent(Content);
-            }
-            Land = p.Update(gameTime);
-            t.Update(p);
+                if (Land) {
+                    r = new Random();              
+                    p = new Pieza(r.Next(1, 6), r.Next(1, 8));
+                    p.LoadContent(Content);
+                }
+                Land = p.Update(gameTime);
+                t.Update(p);
             
-            base.Update(gameTime);
+                base.Update(gameTime);
+            }
         }
 
         //Dibujar

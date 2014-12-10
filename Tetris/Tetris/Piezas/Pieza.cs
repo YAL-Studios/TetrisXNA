@@ -16,8 +16,9 @@ namespace Tetris.Piezas
         public Vector2 position = new Vector2(4, 0);
         public char[,] FIGURA_SELECT = new char[5, 5];
         public char[,] NEXT_FIG = new char[5, 5];
-        float time;
+        float time, lastMovesTimer, difficulty;
         public bool Enabled = true, FR = true, FL = true, cReq;
+            bool lastMoves, isFalling = true;
 
         #region FIGURA I | 1
         char[,,] FIGURA_I = new char[2, 5, 5] {
@@ -209,6 +210,14 @@ namespace Tetris.Piezas
         }
 
         public bool Update(GameTime gameTime) {
+
+            if (lastMoves) {
+                lastMovesTimer += gameTime.ElapsedGameTime.Milliseconds;
+                if (lastMovesTimer >= 200) {
+                    Enabled = false;
+                }
+            } else lastMovesTimer = 0;
+
             kb = Keyboard.GetState();
             if (kbAnt.IsKeyUp(Keys.Space) && kb.IsKeyDown(Keys.Space) && Enabled) cReq = true;
             if (kbAnt.IsKeyUp(Keys.D) && kb.IsKeyDown(Keys.D) && Enabled && FR) {
@@ -219,6 +228,7 @@ namespace Tetris.Piezas
                 position.X--;
             } 
             kbAnt = kb;
+
             if (figura <= 3 && forma > 1) forma = 0;
             if (figura <= 6 && forma > 3) forma = 0;
             if (forma != formaAnt) {
@@ -228,9 +238,8 @@ namespace Tetris.Piezas
             formaAnt = forma;
 
             
-
             time += gameTime.ElapsedGameTime.Milliseconds;
-            if (time >= 200 && Enabled) {
+            if (time >= 200 && Enabled && isFalling) {
                 position.Y += 1;
                 time = 0;
             }
@@ -302,6 +311,13 @@ namespace Tetris.Piezas
                     }
                 }   
             }
+        }
+
+        public void LastMoves (bool _lastMoves) {
+            lastMoves = _lastMoves;
+            if (_lastMoves) {
+                isFalling = false;
+            } else isFalling = true;
         }
     }
 }
