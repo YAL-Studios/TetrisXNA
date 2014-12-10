@@ -52,11 +52,9 @@ namespace Tetris
         protected override void Update(GameTime gameTime) {
 
             if (Land) {
-                r = new Random();
-                
+                r = new Random();              
                 p = new Pieza(r.Next(1,5), r.Next(1, 7));
                 p.LoadContent(Content);
-                //Land = false;
             }
             Land = p.Update(gameTime);
             t.Update(p);

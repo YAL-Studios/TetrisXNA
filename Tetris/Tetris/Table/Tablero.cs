@@ -90,11 +90,11 @@ namespace Tetris.Table
                             CopyTo(p.color, p.FIGURA_SELECT, p.position);
                         }
                         if (i + (int)p.position.X > 0) {
-                            if (tablero[(j + (int)p.position.Y), (i + (int)p.position.X) - 1] == 'U') p.FL = false;
+                            if (tablero[(j + (int)p.position.Y), (i + (int)p.position.X) - 1] != 'X') p.FL = false;
                             else p.FL = true;
                         } else p.position.X += 1;
                         if (i + (int)p.position.X < 11) {
-                            if (tablero[(j + (int)p.position.Y), (i + (int)p.position.X) + 1] == 'U') p.FR = false;
+                            if (tablero[(j + (int)p.position.Y), (i + (int)p.position.X) + 1] != 'X') p.FR = false;
                             else p.FR = true;
                         } else p.position.X -= 1;     
                     }
@@ -129,19 +129,24 @@ namespace Tetris.Table
                     if (fig[i, j] == 'I') {
                         switch (color) { 
                             case 1:
-                                tablero[(j + (int)pos.Y), (i + (int)pos.X)] = '1';
+                                if (tablero[(j + (int)pos.Y), (i + (int)pos.X)] == 'X')
+                                    tablero[(j + (int)pos.Y), (i + (int)pos.X)] = '1';
                                 break;
                             case 2:
-                                tablero[(j + (int)pos.Y), (i + (int)pos.X)] = '2';
+                                if (tablero[(j + (int)pos.Y), (i + (int)pos.X)] == 'X')
+                                    tablero[(j + (int)pos.Y), (i + (int)pos.X)] = '2';
                                 break;
                             case 3:
-                                tablero[(j + (int)pos.Y), (i + (int)pos.X)] = '3';
+                                if (tablero[(j + (int)pos.Y), (i + (int)pos.X)] == 'X')
+                                    tablero[(j + (int)pos.Y), (i + (int)pos.X)] = '3';
                                 break;
                             case 4:
-                                tablero[(j + (int)pos.Y), (i + (int)pos.X)] = '4';
+                                if (tablero[(j + (int)pos.Y), (i + (int)pos.X)] == 'X')
+                                    tablero[(j + (int)pos.Y), (i + (int)pos.X)] = '4';
                                 break;
                             case 5:
-                                tablero[(j + (int)pos.Y), (i + (int)pos.X)] = '5';
+                                if (tablero[(j + (int)pos.Y), (i + (int)pos.X)] == 'X')
+                                    tablero[(j + (int)pos.Y), (i + (int)pos.X)] = '5';
                                 break;
                         }
                         
