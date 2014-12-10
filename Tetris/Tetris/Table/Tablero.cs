@@ -56,28 +56,29 @@ namespace Tetris.Table
         public void Update(Pieza p)
         {
             #region Rotarlo junto al muro
-            if (p.cReq) {
-                for (int i = 0; i < 5; i++) {
-                    for (int j = 0; j < 5; j++) {
-                        if (p.NEXT_FIG[j, i] == 'I') {
-                            if (i + (int)p.position.X > 0 && i < 3) {
-                                if (tablero[(j + (int)p.position.Y), (i + (int)p.position.X)] == 'U') {
-                                    //p.position.X++;
-                                } else pt++;
-                            } else{
-                                if (i + (int)p.position.X == 0) p.position.X++;
-                                if (i + (int)p.position.X == 3) p.position.X--;
-                            }
+            //if (p.cReq) {
+            //    for (int i = 0; i < 5; i++) {
+            //        for (int j = 0; j < 5; j++) {
+            //            if (p.NEXT_FIG[j, i] == 'I') {
+            //                if (i + (int)p.position.X > 0 && i < 3) {
+            //                    if (tablero[(j + (int)p.position.Y), (i + (int)p.position.X)] == 'X') {
+            //                        //p.position.X++;
+            //                        pt++;
+            //                    }
+            //                } else{
+            //                    if (i + (int)p.position.X == 0) p.position.X++;
+            //                    if (i + (int)p.position.X == 3) p.position.X--;
+            //                }
 
-                            if (pt == 4) {
-                                p.forma++;
-                                p.cReq = false;
-                                pt = 0;
-                            }
-                        }
-                    }
-                }
-            }
+            //                if (pt == 4) {
+            //                   p.forma++;
+            //                    p.cReq = false;
+            //                    pt = 0;
+            //                }
+            //            }
+            //        }
+            //    }
+            //}
             #endregion
             #region Control de limites
             for (int i = 0; i < 5; i++) {
