@@ -18,7 +18,7 @@ namespace Tetris.Piezas
         public char[,] NEXT_FORM = new char[5, 5];
         public char[,] NEXT_FIG = new char[5, 5];
         float time, timeD, timeA;
-        public bool Enabled = true, moveR, moveL, moveD, toBottom, Banderazo, cReq;//, flippingOut;
+        public bool Enabled = true, moveR, moveL, moveD, toBottom, cReq;
 
         #region FIGURA I | 1
         char[,,] FIGURA_I = new char[2, 5, 5] {
@@ -232,11 +232,9 @@ namespace Tetris.Piezas
             if (!moveL && kb.IsKeyDown(Keys.A)) {
                 if (timeA >= 300) moveL = true;  
             } else timeA = 0;
-            //if (kb.IsKeyUp(Keys.S)) Banderazo = true;
-            if (/*kbAnt.IsKeyUp(Keys.S) &&*/ kb.IsKeyDown(Keys.S) && Enabled /*&& Banderazo*/) toBottom = true;
+            if (kb.IsKeyDown(Keys.S) && Enabled) toBottom = true;
             else toBottom = false;
             if (kbAnt.IsKeyUp(Keys.Space) && kb.IsKeyDown(Keys.Space) && Enabled ) {
-                //toBottom = true;
             }
                 
             kbAnt = kb;
@@ -255,7 +253,7 @@ namespace Tetris.Piezas
                         time = 0;
                     }
                 } else {
-                    if (time >= 420 - (lvl * 50)) {
+                    if (time >= 420 - (lvl * 20)) {
                         moveD = true;
                         time = 0;
                     }

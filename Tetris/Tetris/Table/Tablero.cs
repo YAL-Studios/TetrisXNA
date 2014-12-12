@@ -49,6 +49,7 @@ namespace Tetris.Table
         #endregion
         };
         char[,] HUD = new char[22, 7] {
+        #region HUD
             {'X', 'F', 'F', 'F', 'F','F', 'F'},
             {'X', 'X', 'X', 'X', 'X','X', 'F'},
             {'X', 'X', 'X', 'X', 'X','X', 'F'},
@@ -71,6 +72,7 @@ namespace Tetris.Table
             {'X', 'X', 'X', 'X', 'X','X', 'F'},
             {'X', 'X', 'X', 'X', 'X','X', 'F'},
             {'X', 'F', 'F', 'F', 'F','F', 'F'},
+        #endregion
         };
         
 
@@ -87,13 +89,12 @@ namespace Tetris.Table
             Ver = Content.Load<Texture2D>("Piezas/Pieza_Verde");
             Cel = Content.Load<Texture2D>("Piezas/Pieza_Celeste");
             Nar = Content.Load<Texture2D>("Piezas/Pieza_Naranja");
-            Arial = Content.Load<SpriteFont>("Arial");
+            Arial = Content.Load<SpriteFont>("Fonts/Arial");
         }
 
-        public void Update(Pieza p, ref int _lvl) {
+        public void Update(Pieza p, ref int _lvl, ref int _puntos) {
             NextFig = p.NEXT_FIG;
             NextColor = p.NextCol;
-            //lvl = p.lvl;
             #region Cambio de forma
             if (p.cReq && !p.toBottom) {
                 for (int i = 0; i < 5; i++) {
@@ -110,8 +111,6 @@ namespace Tetris.Table
                     if (ff == 4) break;
                 }
                 if (ff == 4) p.forma++;
-                else {
-                }
                 ff = 0;
                 p.cReq = false;
             }
@@ -134,7 +133,7 @@ namespace Tetris.Table
                 if (fd == 4) {
                     p.position.Y += 1;
                     if (p.toBottom)
-                        puntos++;
+                        puntos = _puntos++;
                 } else {
                     p.Enabled = false;
                     CopyTo(p.color, p.FIGURA_SELECT, p.position);
@@ -166,7 +165,7 @@ namespace Tetris.Table
                 
                 if (fl == 4) p.position.X -= 1;
                 p.moveL = false;
-                fl = 0;     
+                fl = 0;
             }
             #endregion
             #region Quitar Piezas
@@ -184,10 +183,9 @@ namespace Tetris.Table
                     if (pIguales == 10) {
                         filasMult++;
                         filasTot++;
-                        if (filasTot >= 3) {
+                        if (filasTot % 3 == 0) {
                             _lvl++;
                             lvl = _lvl;
-                            filasTot = 0;
                         }
                         break;
                     }        
@@ -207,7 +205,7 @@ namespace Tetris.Table
                     }
                     if (ultI == 25) {
                         qPieza = false;
-                        puntos += (1000 * filasMult) * _lvl;
+                        puntos = _puntos += (1000 * filasMult) * _lvl;
                         filasMult = 0;
                     }
                 }
@@ -252,7 +250,6 @@ namespace Tetris.Table
                         spriteBatch.Draw(Azul, new Vector2(32 * j, 32 * (i - 5)), Color.White);
                     if (tablero[i, j] == '7')
                         spriteBatch.Draw(Ama, new Vector2(32 * j, 32 * (i - 5)), Color.White);
-
                 }
             }
             #endregion
@@ -264,9 +261,12 @@ namespace Tetris.Table
                     }
                 }
             }
-            spriteBatch.DrawString(Arial, "Puntosetes:", new Vector2(400, 330), Color.White);
-            spriteBatch.DrawString(Arial, puntos.ToString(), new Vector2(400, 360), Color.White);
-            spriteBatch.DrawString(Arial, lvl.ToString(), new Vector2(400, 390), Color.White);
+            spriteBatch.DrawString(Arial, "SCORE:", new Vector2(420, 310), Color.Yellow);
+            spriteBatch.DrawString(Arial, puntos.ToString(), new Vector2(445, 350), Color.White);
+            spriteBatch.DrawString(Arial, "LINES:", new Vector2(400, 400), Color.Yellow);
+            spriteBatch.DrawString(Arial, filasTot.ToString(), new Vector2(490, 400), Color.White);
+            spriteBatch.DrawString(Arial, "LEVEL:", new Vector2(400, 450), Color.Yellow);
+            spriteBatch.DrawString(Arial, lvl.ToString(), new Vector2(490, 450), Color.White);
             for (int i = 0; i < 5; i++) {
                 for (int j = 0; j < 5; j++) {
                     if (NextFig[i, j] == 'I') {
@@ -297,7 +297,6 @@ namespace Tetris.Table
                 }
             }
             #endregion
-
         }
 
         void CopyTo(int _color, char[,] fig, Vector2 pos) {

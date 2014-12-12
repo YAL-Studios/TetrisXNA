@@ -24,8 +24,9 @@ namespace Tetris
         Tablero t = new Tablero();
         Random r;
         KeyboardState kb, kbAnt;
+        SpriteFont Arial;
         bool Land = true, gameOver;
-        int NextFig, lvl = 1;
+        int NextFig, lvl = 1, puntos = 0;
 
         Song music;
 
@@ -45,6 +46,8 @@ namespace Tetris
         protected override void LoadContent() {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             music = Content.Load<Song>("Canciones/Theme B");
+            Arial = Content.Load<SpriteFont>("Fonts/Score");
+
             t.LoadContent(Content);
 
             MediaPlayer.IsRepeating = true;
@@ -78,15 +81,12 @@ namespace Tetris
                 }
                 Land = p.Update(gameTime, lvl);
 
-                t.Update(p, ref lvl);
+                t.Update(p, ref lvl, ref puntos);
                 if (t.GameOver())
                     gameOver = true;
-               
-
-
                 base.Update(gameTime);
             } else {
-                Exit();
+                
             }
             
         }
@@ -95,9 +95,15 @@ namespace Tetris
         protected override void Draw(GameTime gameTime) {
             GraphicsDevice.Clear(Color.Black);
             spriteBatch.Begin();
-            t.Draw(spriteBatch);
-            if (!Land)
-                p.Draw(spriteBatch);
+            if (!gameOver) {
+                t.Draw(spriteBatch);
+                if (!Land)
+                    p.Draw(spriteBatch);
+            } else {
+                spriteBatch.DrawString(Arial, "SCORE: " + puntos.ToString(), new Vector2(190,  300), Color.Yellow);
+            }
+            
+            
             spriteBatch.End();
             base.Draw(gameTime);
         }
