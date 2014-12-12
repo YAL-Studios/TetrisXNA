@@ -12,7 +12,8 @@ namespace Tetris.Table
     public class Tablero
     {
         Texture2D fondo, marco, Ama, Azul, Rojo, Mora, Ver, Cel, Nar;
-        int fr, fl, fd, ff, pIguales, ultI = 0, color, NextColor;
+        SpriteFont Arial;
+        int fr, fl, fd, ff, pIguales, ultI = 0, color, NextColor, puntos, filas;
         char[,] NextFig;
         bool qPieza;
         Vector2 posNextP = new Vector2(365, 60);
@@ -86,6 +87,7 @@ namespace Tetris.Table
             Ver = Content.Load<Texture2D>("Piezas/Pieza_Verde");
             Cel = Content.Load<Texture2D>("Piezas/Pieza_Celeste");
             Nar = Content.Load<Texture2D>("Piezas/Pieza_Naranja");
+            Arial = Content.Load<SpriteFont>("Arial");
         }
 
         public void Update(Pieza p) {
@@ -131,6 +133,8 @@ namespace Tetris.Table
 
                 if (fd == 4) {
                     p.position.Y += 1;
+                    if (p.toBottom)
+                        puntos++;
                 } else {
                     p.Enabled = false;
                     CopyTo(p.color, p.FIGURA_SELECT, p.position);
@@ -167,40 +171,41 @@ namespace Tetris.Table
             #endregion
             #region Quitar Piezas
             if (qPieza) {
-            qPiezas:
-            for (int i = 5 + ultI; i < 26; i++) {
-                for (int j = 1; j < 11; j++) {
-                    if (tablero[i, j] != 'X') {
-                        pIguales++;
-                       ultI = i;
-                    } else {
-                        pIguales = 0;
-                        break;
-                    }
-                }
-                if (pIguales == 10) break;
-            }
-            if (pIguales == 10) {
-                for (int j = 1; j < 11; j++) {
-                    tablero[ultI, j] = 'X';
-                    pIguales--;
-                }
-                for (int i = ultI; i > 0; i--) {
+                for (int i = 5 + ultI; i < 26; i++) {
                     for (int j = 1; j < 11; j++) {
-                        char temp;
-                        temp = tablero[i, j];
-                        tablero[i, j] = tablero[i - 1, j];
-                        tablero[i - 1, j] = temp;                   
+                        if (tablero[i, j] != 'X') {
+                            pIguales++;
+                            ultI = i;
+                        } else {
+                            pIguales = 0;
+                            break;
+                        }
                     }
+                    if (pIguales == 10) {
+                        filas++;
+                        break;
+                    }        
                 }
+                if (pIguales == 10) {
+                    for (int j = 1; j < 11; j++) {
+                        tablero[ultI, j] = 'X';
+                        pIguales--;
+                    }
+                    for (int i = ultI; i > 0; i--) {
+                        for (int j = 1; j < 11; j++) {
+                            char temp;
+                            temp = tablero[i, j];
+                            tablero[i, j] = tablero[i - 1, j];
+                            tablero[i - 1, j] = temp;                   
+                        }
+                    }
                     if (ultI == 25) {
                         qPieza = false;
-                    goto qPiezas;
-            }
-                        
+                        puntos += (100 * filas);
+                        filas = 0;
+                    }
                 }
-            ultI = 0;
-                
+                ultI = 0; 
             }
             #endregion
 
@@ -253,6 +258,8 @@ namespace Tetris.Table
                     }
                 }
             }
+            spriteBatch.DrawString(Arial, "Puntosetes:", new Vector2(400, 330), Color.White);
+            spriteBatch.DrawString(Arial, puntos.ToString(), new Vector2(400, 360), Color.White);
             for (int i = 0; i < 5; i++) {
                 for (int j = 0; j < 5; j++) {
                     if (NextFig[i, j] == 'I') {
