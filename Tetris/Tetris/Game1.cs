@@ -24,7 +24,7 @@ namespace Tetris
         Tablero t = new Tablero();
         Random r;
         KeyboardState kb, kbAnt;
-        bool Land = true, gameOver, FirstBanderazo = true;
+        bool Land = true, gameOver;
         int NextFig;
 
         Song music;
@@ -72,13 +72,9 @@ namespace Tetris
                 
                 kbAnt = kb;
                 if (Land) {
-                    if (FirstBanderazo) {
 
-                        FirstBanderazo = false;
-                    } else {
-                        p = new Pieza(NextFig, r.Next(1, 8));
-                        NextFig = p.NextFig;
-                    }
+                    p = new Pieza(NextFig, r.Next(1, 8));
+                    NextFig = p.NextFig;
                     p.LoadContent(Content);
                 }
                 Land = p.Update(gameTime);
