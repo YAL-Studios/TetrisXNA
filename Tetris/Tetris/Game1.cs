@@ -50,7 +50,11 @@ namespace Tetris
             MediaPlayer.IsRepeating = true;
             MediaPlayer.Play(music);
             MediaPlayer.Volume = 0.05f;
-            
+
+            r = new Random();
+            p = new Pieza(r.Next(1, 8), r.Next(1, 8));
+            NextFig = p.NextFig;
+
         }
 
         //Descargar contenido
@@ -69,9 +73,7 @@ namespace Tetris
                 kbAnt = kb;
                 if (Land) {
                     if (FirstBanderazo) {
-                        r = new Random();              
-                        p = new Pieza(r.Next(1, 8), r.Next(1, 8));
-                        NextFig = p.NextFig;
+
                         FirstBanderazo = false;
                     } else {
                         p = new Pieza(NextFig, r.Next(1, 8));

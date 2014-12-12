@@ -65,6 +65,7 @@ namespace Tetris.Table
         public void Update(Pieza p) {
             NextFig = p.NEXT_FIG;
             NextColor = p.NextCol;
+
             #region Cambio de forma
             if (p.cReq && !p.toBottom) {
                 for (int i = 0; i < 5; i++) {
@@ -243,7 +244,6 @@ namespace Tetris.Table
                                 spriteBatch.Draw(Cel, new Vector2(400 + (32 * i), 100 + (32 * j)), Color.White);
                                 break;
                         }
-                        
                     }
                 }
             }
