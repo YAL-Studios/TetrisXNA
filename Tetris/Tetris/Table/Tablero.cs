@@ -14,6 +14,7 @@ namespace Tetris.Table
         Texture2D fondo, marco, Ama, Azul, Rojo, Mora, Ver, Cel, Nar;
         int fr, fl, fd, ff, pIguales, ultI = 0, color;
         Vector2 colPos;
+        bool qPieza;
         char[,] tablero = new char[27, 12] { 
         #region Inicializacion del tablero
         {'U', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'U'},
@@ -38,10 +39,10 @@ namespace Tetris.Table
         {'U', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'U'},
         {'U', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'U'},
         {'U', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'U'},
-        {'U', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'U'},
-        {'U', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'U'},
+        {'U', '3', '3', '3', '3', '3', '3', '3', '3', '3', '3', 'U'},
+        {'U', '3', '3', '3', '3', '3', '3', '3', 'X', '3', '3', 'U'},
         {'U', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', 'U'},
-        {'U', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', 'U'},
+        {'U', '2', '2', '2', '2', '2', '2', '2', '2', '2', '2', 'U'},
         {'U', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'U'},
         #endregion
         };
@@ -62,6 +63,7 @@ namespace Tetris.Table
         }
 
         public void Update(Pieza p) {
+
             #region Cambio de forma
             if (p.cReq && !p.toBottom) {
                 for (int i = 0; i < 5; i++) {
@@ -83,6 +85,7 @@ namespace Tetris.Table
                 ff = 0;
                 p.cReq = false;
             }
+
             #endregion
             #region Caida
             if (p.moveD) {
@@ -135,6 +138,7 @@ namespace Tetris.Table
             }
             #endregion
             #region Quitar Piezas
+            if (qPieza) {
             qPiezas:
             for (int i = 5 + ultI; i < 26; i++) {
                 for (int j = 1; j < 11; j++) {
@@ -161,11 +165,17 @@ namespace Tetris.Table
                         tablero[i - 1, j] = temp;                   
                     }
                 }
-                if (ultI != 26)
+                    if (ultI == 25) {
+                        qPieza = false;
                     goto qPiezas;
             }
+                        
+                }
             ultI = 0;
+                
+            }
             #endregion
+
         }
 
         public bool GameOver () {
@@ -203,6 +213,7 @@ namespace Tetris.Table
 
         void CopyTo(int _color, char[,] fig, Vector2 pos) {
             color = _color;
+            qPieza = true;
             for (int i = 0; i < 5; i++) {
                 for (int j = 0; j < 5; j++) {
                     if (fig[i, j] == 'I') {
