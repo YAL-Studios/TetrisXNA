@@ -14,6 +14,7 @@ namespace Tetris.Table
         Texture2D fondo, marco, Ama, Azul, Rojo, Mora, Ver;
         int fr, fl, fd, ff, pIguales, ultI = 0, color;
         Vector2 colPos;
+        bool qPieza;
         char[,] tablero = new char[27, 12] { 
         #region Inicializacion del tablero
         {'U', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'U'},
@@ -38,10 +39,10 @@ namespace Tetris.Table
         {'U', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'U'},
         {'U', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'U'},
         {'U', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'U'},
-        {'U', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'U'},
-        {'U', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'U'},
+        {'U', '3', '3', '3', '3', '3', '3', '3', '3', '3', '3', 'U'},
+        {'U', '3', '3', '3', '3', '3', '3', '3', 'X', '3', '3', 'U'},
         {'U', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', 'U'},
-        {'U', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', 'U'},
+        {'U', '2', '2', '2', '2', '2', '2', '2', '2', '2', '2', 'U'},
         {'U', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'U'},
         #endregion
         };
@@ -60,6 +61,7 @@ namespace Tetris.Table
         }
 
         public void Update(Pieza p) {
+
             #region Cambio de forma
             if (p.cReq) {
                 for (int i = 0; i < 5; i++) {
@@ -81,6 +83,7 @@ namespace Tetris.Table
                 ff = 0;
                 p.cReq = false;
             }
+
             #endregion
             #region Caida
             if (p.moveD) {
@@ -133,37 +136,44 @@ namespace Tetris.Table
             }
             #endregion
             #region Quitar Piezas
+            if (qPieza) {
             qPiezas:
-            for (int i = 5 + ultI; i < 26; i++) {
-                for (int j = 1; j < 11; j++) {
-                    if (tablero[i, j] != 'X') {
-                        pIguales++;
-                        ultI = i;
-                    } else {
-                        pIguales = 0;
-                        break;
-                    }
-                }
-                if (pIguales == 10) break;
-            }
-            if (pIguales == 10) {
-                for (int j = 1; j < 11; j++) {
-                    tablero[ultI, j] = 'X';
-                    pIguales--;
-                }
-                for (int i = ultI; i > 0; i--) {
+                for (int i = 5 + ultI; i < 26; i++) {
                     for (int j = 1; j < 11; j++) {
-                        char temp;
-                        temp = tablero[i, j];
-                        tablero[i, j] = tablero[i - 1, j];
-                        tablero[i - 1, j] = temp;                   
+                        if (tablero[i, j] != 'X') {
+                            pIguales++;
+                            ultI = i;
+                        } else {
+                            pIguales = 0;
+                            break;
+                        }
                     }
+                    if (pIguales == 10) break;
                 }
-                if (ultI == 26)
-                    goto qPiezas;
+                if (pIguales == 10) {
+                    for (int j = 1; j < 11; j++) {
+                        tablero[ultI, j] = 'X';
+                        pIguales--;
+                    }
+                    for (int i = ultI; i > 0; i--) {
+                        for (int j = 1; j < 11; j++) {
+                            char temp;
+                            temp = tablero[i, j];
+                            tablero[i, j] = tablero[i - 1, j];
+                            tablero[i - 1, j] = temp;
+                        }
+                    }
+                    if (ultI == 25) {
+                        qPieza = false;
+                        goto qPiezas;
+                    }
+                        
+                }
+                ultI = 0;
+                
             }
-            ultI = 0;
             #endregion
+
         }
 
         public void Draw (SpriteBatch spriteBatch)
@@ -188,6 +198,7 @@ namespace Tetris.Table
 
         void CopyTo(int _color, char[,] fig, Vector2 pos) {
             color = _color;
+            qPieza = true;
             for (int i = 0; i < 5; i++) {
                 for (int j = 0; j < 5; j++) {
                     if (fig[i, j] == 'I') {
