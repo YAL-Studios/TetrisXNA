@@ -63,7 +63,7 @@ namespace Tetris.Table
         public void Update(Pieza p) {
 
             #region Cambio de forma
-            if (p.cReq) {
+            if (p.cReq && !p.toBottom) {
                 for (int i = 0; i < 5; i++) {
                     for (int j = 0; j < 5; j++) {
                         if ((i + (int)p.position.X) > 0) {
@@ -110,7 +110,7 @@ namespace Tetris.Table
             }
             #endregion
             #region Movimiento X
-            if (p.moveR || p.moveL) {
+            if ((p.moveR || p.moveL) && !p.toBottom) {
                 for (int i = 0; i < 5; i++) {
                     for (int j = 0; j < 5; j++) {
                         if (p.FIGURA_SELECT[i, j] == 'I') {
@@ -138,42 +138,53 @@ namespace Tetris.Table
             #region Quitar Piezas
             if (qPieza) {
             qPiezas:
-                for (int i = 5 + ultI; i < 26; i++) {
-                    for (int j = 1; j < 11; j++) {
-                        if (tablero[i, j] != 'X') {
-                            pIguales++;
-                            ultI = i;
-                        } else {
-                            pIguales = 0;
-                            break;
-                        }
+            for (int i = 5 + ultI; i < 26; i++) {
+                for (int j = 1; j < 11; j++) {
+                    if (tablero[i, j] != 'X') {
+                        pIguales++;
+                        ultI = i;
+                    } else {
+                        pIguales = 0;
+                        break;
                     }
-                    if (pIguales == 10) break;
                 }
-                if (pIguales == 10) {
+                if (pIguales == 10) break;
+            }
+            if (pIguales == 10) {
+                for (int j = 1; j < 11; j++) {
+                    tablero[ultI, j] = 'X';
+                    pIguales--;
+                }
+                for (int i = ultI; i > 0; i--) {
                     for (int j = 1; j < 11; j++) {
-                        tablero[ultI, j] = 'X';
-                        pIguales--;
+                        char temp;
+                        temp = tablero[i, j];
+                        tablero[i, j] = tablero[i - 1, j];
+                        tablero[i - 1, j] = temp;                   
                     }
-                    for (int i = ultI; i > 0; i--) {
-                        for (int j = 1; j < 11; j++) {
-                            char temp;
-                            temp = tablero[i, j];
-                            tablero[i, j] = tablero[i - 1, j];
-                            tablero[i - 1, j] = temp;
-                        }
-                    }
+                }
                     if (ultI == 25) {
                         qPieza = false;
-                        goto qPiezas;
-                    }
+                    goto qPiezas;
+            }
                         
                 }
-                ultI = 0;
+            ultI = 0;
                 
             }
             #endregion
 
+        }
+
+        public bool GameOver () {
+            for (int i = 0; i < 5; i++) {
+                for (int j = 1; j < 11; j++) {
+                    if (tablero[i, j] != 'X') {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
 
         public void Draw (SpriteBatch spriteBatch)

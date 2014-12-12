@@ -16,8 +16,8 @@ namespace Tetris.Piezas
         public Vector2 position = new Vector2(3, 0);
         public char[,] FIGURA_SELECT = new char[5, 5];
         public char[,] NEXT_FIG = new char[5, 5];
-        float time;
-        public bool Enabled = true, moveR, moveL, moveD, cReq;
+        float time, timeD, timeA;
+        public bool Enabled = true, moveR, moveL, moveD, toBottom, cReq;
 
         #region FIGURA I | 1
         char[,,] FIGURA_I = new char[2, 5, 5] {
@@ -209,14 +209,23 @@ namespace Tetris.Piezas
         }
 
         public bool Update(GameTime gameTime) {
+            time += gameTime.ElapsedGameTime.Milliseconds;
+            timeD += gameTime.ElapsedGameTime.Milliseconds;
+            timeA += gameTime.ElapsedGameTime.Milliseconds;
             kb = Keyboard.GetState();
             if (kbAnt.IsKeyUp(Keys.Space) && kb.IsKeyDown(Keys.Space) && Enabled) cReq = true;
-            if (kbAnt.IsKeyUp(Keys.D) && kb.IsKeyDown(Keys.D) && Enabled) {
-                moveR = true;
-            }
-            if (kbAnt.IsKeyUp(Keys.A) && kb.IsKeyDown(Keys.A) && Enabled) {
-                moveL = true;
-            } 
+            if (kbAnt.IsKeyUp(Keys.D) && kb.IsKeyDown(Keys.D) && Enabled) moveR = true;
+            if (!moveR && kb.IsKeyDown(Keys.D)) {
+                if (timeD >= 300) moveR = true;
+            } else timeD = 0;
+                
+            if (kbAnt.IsKeyUp(Keys.A) && kb.IsKeyDown(Keys.A) && Enabled) moveL = true;
+            if (!moveL && kb.IsKeyDown(Keys.A)) {
+                if (timeA >= 300) moveL = true;  
+            } else timeA = 0;
+
+            if (kbAnt.IsKeyUp(Keys.S) && kb.IsKeyDown(Keys.S) && Enabled) toBottom = true;
+                
             kbAnt = kb;
             if (figura <= 3 && forma > 1) forma = 0;
             if (figura <= 6 && forma > 3) forma = 0;
@@ -226,11 +235,20 @@ namespace Tetris.Piezas
             }
             formaAnt = forma;
 
-            time += gameTime.ElapsedGameTime.Milliseconds;
-            if (time >= 200 && Enabled) {
-                moveD = true;
-                time = 0;
+            if (Enabled) {
+                if (toBottom) {
+                    if (time >= 10) {
+                        moveD = true;
+                        time = 0;
+                    }
+                } else {
+                    if (time >= 500) {
+                        moveD = true;
+                        time = 0;
+                    }
+                }
             }
+
             if (!Enabled) return true;
             return false;
 
