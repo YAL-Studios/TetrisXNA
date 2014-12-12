@@ -11,7 +11,7 @@ namespace Tetris.Table
 {
     public class Tablero
     {
-        Texture2D fondo, marco, Ama, Azul, Rojo, Mora, Ver;
+        Texture2D fondo, marco, Ama, Azul, Rojo, Mora, Ver, Cel, Nar;
         int fr, fl, fd, ff, pIguales, ultI = 0, color;
         Vector2 colPos;
         char[,] tablero = new char[27, 12] { 
@@ -57,6 +57,8 @@ namespace Tetris.Table
             Mora = Content.Load<Texture2D>("Piezas/Pieza_Morada");
             Rojo = Content.Load<Texture2D>("Piezas/Pieza_Roja");
             Ver = Content.Load<Texture2D>("Piezas/Pieza_Verde");
+            Cel = Content.Load<Texture2D>("Piezas/Pieza_Celeste");
+            Nar = Content.Load<Texture2D>("Piezas/Pieza_Naranja");
         }
 
         public void Update(Pieza p) {
@@ -138,7 +140,7 @@ namespace Tetris.Table
                 for (int j = 1; j < 11; j++) {
                     if (tablero[i, j] != 'X') {
                         pIguales++;
-                        ultI = i;
+                       ultI = i;
                     } else {
                         pIguales = 0;
                         break;
@@ -187,11 +189,13 @@ namespace Tetris.Table
                     if (tablero[i, j] == 'U' || tablero[i, j] == 'F') {
                         spriteBatch.Draw(marco, new Vector2(32 * j, 32 * (i - 5)), Color.White);
                     }
-                    if (tablero[i, j] == '1') spriteBatch.Draw(Ama, new Vector2(32 * j, 32 * (i - 5)), Color.White);
-                    if (tablero[i, j] == '2') spriteBatch.Draw(Azul, new Vector2(32 * j, 32 * (i - 5)), Color.White);
-                    if (tablero[i, j] == '3') spriteBatch.Draw(Mora, new Vector2(32 * j, 32 * (i - 5)), Color.White);
-                    if (tablero[i, j] == '4') spriteBatch.Draw(Rojo, new Vector2(32 * j, 32 * (i - 5)), Color.White);
-                    if (tablero[i, j] == '5') spriteBatch.Draw(Ver, new Vector2(32 * j, 32 * (i - 5)), Color.White);
+                    if (tablero[i, j] == '1') spriteBatch.Draw(Cel, new Vector2(32 * j, 32 * (i - 5)), Color.White);
+                    if (tablero[i, j] == '2') spriteBatch.Draw(Ver, new Vector2(32 * j, 32 * (i - 5)), Color.White);
+                    if (tablero[i, j] == '3') spriteBatch.Draw(Rojo, new Vector2(32 * j, 32 * (i - 5)), Color.White);
+                    if (tablero[i, j] == '4') spriteBatch.Draw(Mora, new Vector2(32 * j, 32 * (i - 5)), Color.White);
+                    if (tablero[i, j] == '5') spriteBatch.Draw(Nar, new Vector2(32 * j, 32 * (i - 5)), Color.White);
+                    if (tablero[i, j] == '6') spriteBatch.Draw(Azul, new Vector2(32 * j, 32 * (i - 5)), Color.White);
+                    if (tablero[i, j] == '7') spriteBatch.Draw(Ama, new Vector2(32 * j, 32 * (i - 5)), Color.White);
                     
                 }
             }
@@ -223,9 +227,15 @@ namespace Tetris.Table
                                 if (tablero[(j + (int)pos.Y), (i + (int)pos.X)] == 'X')
                                     tablero[(j + (int)pos.Y), (i + (int)pos.X)] = '5';
                                 break;
-                        }
-                        
-                        
+                            case 6:
+                                if (tablero[(j + (int)pos.Y), (i + (int)pos.X)] == 'X')
+                                    tablero[(j + (int)pos.Y), (i + (int)pos.X)] = '6';
+                                break;
+                            case 7:
+                                if (tablero[(j + (int)pos.Y), (i + (int)pos.X)] == 'X')
+                                    tablero[(j + (int)pos.Y), (i + (int)pos.X)] = '7';
+                                break;
+                        }  
                     }
                 }
             }

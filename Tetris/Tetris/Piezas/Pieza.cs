@@ -181,29 +181,34 @@ namespace Tetris.Piezas
         #endregion
         
 
-        public Pieza(int _color, int _figura) {
-            color = _color;
-            figura = _figura;
+        public Pieza(int _figura) {
+            color = figura = _figura;
             CopyMatrix();
             TMatrix();
         }
 
         public void LoadContent(ContentManager Content) {
             switch (color) { 
-                case 1:
+                case 7:
                     texture = Content.Load<Texture2D>("Piezas/Pieza_Amarilla");
                     break;
-                case 2:
+                case 6:
                     texture = Content.Load<Texture2D>("Piezas/Pieza_Azul");
                     break;
-                case 3:
+                case 4:
                     texture = Content.Load<Texture2D>("Piezas/Pieza_Morada");
                     break;
-                case 4:
+                case 3:
                     texture = Content.Load<Texture2D>("Piezas/Pieza_Roja");
                     break;
-                case 5:
+                case 2:
                     texture = Content.Load<Texture2D>("Piezas/Pieza_Verde");
+                    break;
+                case 5:
+                    texture = Content.Load<Texture2D>("Piezas/Pieza_Naranja");
+                    break;
+                case 1:
+                    texture = Content.Load<Texture2D>("Piezas/Pieza_Celeste");
                     break;
             }
         }
