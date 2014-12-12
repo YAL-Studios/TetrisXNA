@@ -184,9 +184,9 @@ namespace Tetris.Table
                     if (pIguales == 10) {
                         filasMult++;
                         filasTot++;
-                        if (filasTot >= 3) {
+                        if (filasTot % 3 == 0) {
                             lvl++;                          
-                            filasTot = 0;
+                            
                         }
                         break;
                     }        
@@ -266,6 +266,7 @@ namespace Tetris.Table
             spriteBatch.DrawString(Arial, "Puntosetes:", new Vector2(400, 330), Color.White);
             spriteBatch.DrawString(Arial, puntos.ToString(), new Vector2(400, 360), Color.White);
             spriteBatch.DrawString(Arial, lvl.ToString(), new Vector2(400, 390), Color.White);
+            spriteBatch.DrawString(Arial, filasTot.ToString(), new Vector2(400, 420), Color.White);
             for (int i = 0; i < 5; i++) {
                 for (int j = 0; j < 5; j++) {
                     if (NextFig[i, j] == 'I') {
