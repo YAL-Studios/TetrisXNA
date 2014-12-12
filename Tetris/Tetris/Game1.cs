@@ -23,7 +23,6 @@ namespace Tetris
         //Puedes rotar la figura presionando D
         Tablero t = new Tablero();
         Random r;
-        bool Land = true, gameOver = false;
         KeyboardState kb, kbAnt;
         bool Land = true, gameOver, FirstBanderazo = true;
         int NextFig;
@@ -70,7 +69,7 @@ namespace Tetris
                 kbAnt = kb;
                 if (Land) {
                     if (FirstBanderazo) {
-                    r = new Random();              
+                        r = new Random();              
                         p = new Pieza(r.Next(1, 8), r.Next(1, 8));
                         NextFig = p.NextFig;
                         FirstBanderazo = false;
