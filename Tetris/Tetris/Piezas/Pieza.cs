@@ -237,7 +237,7 @@ namespace Tetris.Piezas
 
             if (Enabled) {
                 if (toBottom) {
-                    if (time >= 25) {
+                    if (time >= 10) {
                         moveD = true;
                         time = 0;
                     }
