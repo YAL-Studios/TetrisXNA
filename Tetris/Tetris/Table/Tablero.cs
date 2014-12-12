@@ -12,7 +12,8 @@ namespace Tetris.Table
     public class Tablero
     {
         Texture2D fondo, marco, Ama, Azul, Rojo, Mora, Ver;
-        int fr, fl, fd, ff, color;
+        int fr, fl, fd, ff, pIguales, ultI = 0, color;
+        Vector2 colPos;
         char[,] tablero = new char[27, 12] { 
         #region Inicializacion del tablero
         {'U', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'U'},
@@ -39,8 +40,8 @@ namespace Tetris.Table
         {'U', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'U'},
         {'U', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'U'},
         {'U', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'U'},
-        {'U', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'U'},
-        {'U', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'U'},
+        {'U', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', 'U'},
+        {'U', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', 'U'},
         {'U', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'U'},
         #endregion
         };
@@ -59,20 +60,28 @@ namespace Tetris.Table
         }
 
         public void Update(Pieza p) {
+            #region Cambio de forma
             if (p.cReq) {
                 for (int i = 0; i < 5; i++) {
                     for (int j = 0; j < 5; j++) {
-                        if (p.NEXT_FIG[i, j] == 'I') {
-                            if (tablero[(j + (int)p.position.Y), (i + (int)p.position.X)] == 'X') {
-                                ff++;
+                        if ((i + (int)p.position.X) > 0) {
+                            if (p.NEXT_FIG[j, i] == 'I') {
+                                if (tablero[(j + (int)p.position.Y), (i + (int)p.position.X)] == 'X') {
+                                    ff++;
+                                }
                             }
                         }
+                        if (ff == 4) break;
                     }
+                    if (ff == 4) break;
                 }
                 if (ff == 4) p.forma++;
+                else {
+                }
                 ff = 0;
                 p.cReq = false;
             }
+            #endregion
             #region Caida
             if (p.moveD) {
                 for (int i = 0; i < 5; i++) {
@@ -81,9 +90,10 @@ namespace Tetris.Table
                             if (tablero[(j + (int)p.position.Y) + 1, (i + (int)p.position.X)] == 'X') {
                                 fd++;
                             }
-
                         }
+                        if (fd == 4) break;
                     }
+                    if (fd == 4) break;
                 }
 
                 if (fd == 4) {
@@ -108,7 +118,9 @@ namespace Tetris.Table
                                 fl++;
                             }
                         }
+                        if (fl == 4 || fr == 4) break;
                     }
+                    if (fl == 4 || fr == 4) break;
                 }
 
                 if (fr == 4) p.position.X += 1;
@@ -120,9 +132,41 @@ namespace Tetris.Table
                 fl = 0;     
             }
             #endregion
+            #region Quitar Piezas
+            qPiezas:
+            for (int i = 5 + ultI; i < 26; i++) {
+                for (int j = 1; j < 11; j++) {
+                    if (tablero[i, j] != 'X') {
+                        pIguales++;
+                        ultI = i;
+                    } else {
+                        pIguales = 0;
+                        break;
+                    }
+                }
+                if (pIguales == 10) break;
+            }
+            if (pIguales == 10) {
+                for (int j = 1; j < 11; j++) {
+                    tablero[ultI, j] = 'X';
+                    pIguales--;
+                }
+                for (int i = ultI; i > 0; i--) {
+                    for (int j = 1; j < 11; j++) {
+                        char temp;
+                        temp = tablero[i, j];
+                        tablero[i, j] = tablero[i - 1, j];
+                        tablero[i - 1, j] = temp;                   
+                    }
+                }
+                if (ultI == 26)
+                    goto qPiezas;
+            }
+            ultI = 0;
+            #endregion
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw (SpriteBatch spriteBatch)
         {
             for (int i = 5; i < 27; i++) {
                 for (int j = 0; j < 12; j++) {
