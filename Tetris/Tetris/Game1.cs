@@ -60,7 +60,7 @@ namespace Tetris
         //Actualizar
         protected override void Update (GameTime gameTime) {
             if (!gameOver) { 
-
+                //
                 kb = Keyboard.GetState();
                 if (kbAnt.IsKeyUp(Keys.M) && kb.IsKeyDown(Keys.M)) MediaPlayer.IsMuted = !MediaPlayer.IsMuted;
                 if (kbAnt.IsKeyUp(Keys.PageUp) && kb.IsKeyDown(Keys.PageUp)) MediaPlayer.Volume += 0.01f;
