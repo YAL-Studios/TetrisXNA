@@ -25,7 +25,7 @@ namespace Tetris
         Random r;
         KeyboardState kb, kbAnt;
         bool Land = true, gameOver;
-        int NextFig;
+        int NextFig, lvl = 1;
 
         Song music;
 
@@ -76,9 +76,9 @@ namespace Tetris
                     NextFig = p.NextFig;
                     p.LoadContent(Content);
                 }
-                Land = p.Update(gameTime);
+                Land = p.Update(gameTime, lvl);
 
-                t.Update(p);
+                t.Update(p, ref lvl);
                 if (t.GameOver())
                     gameOver = true;
                

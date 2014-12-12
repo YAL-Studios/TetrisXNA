@@ -13,7 +13,7 @@ namespace Tetris.Table
     {
         Texture2D fondo, marco, Ama, Azul, Rojo, Mora, Ver, Cel, Nar;
         SpriteFont Arial;
-        int fr, fl, fd, ff, pIguales, ultI = 0, color, NextColor, puntos, filasMult, filasTot, lvl = 1;
+        int fr, fl, fd, ff, pIguales, ultI = 0, color, NextColor, puntos, filasMult, filasTot, lvl;
         char[,] NextFig;
         bool qPieza;
         Vector2 posNextP = new Vector2(365, 60);
@@ -90,7 +90,7 @@ namespace Tetris.Table
             Arial = Content.Load<SpriteFont>("Arial");
         }
 
-        public void Update(Pieza p) {
+        public void Update(Pieza p, ref int _lvl) {
             NextFig = p.NEXT_FIG;
             NextColor = p.NextCol;
             //lvl = p.lvl;
@@ -185,7 +185,8 @@ namespace Tetris.Table
                         filasMult++;
                         filasTot++;
                         if (filasTot >= 3) {
-                            lvl++;                          
+                            _lvl++;
+                            lvl = _lvl;
                             filasTot = 0;
                         }
                         break;
@@ -206,7 +207,7 @@ namespace Tetris.Table
                     }
                     if (ultI == 25) {
                         qPieza = false;
-                        puntos += (1000 * filasMult) * p.lvl;
+                        puntos += (1000 * filasMult) * _lvl;
                         filasMult = 0;
                     }
                 }

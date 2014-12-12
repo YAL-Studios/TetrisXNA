@@ -10,7 +10,7 @@ using System.Text;
 namespace Tetris.Piezas
 {
     public class Pieza {
-        public int color, figura, forma, formaAnt, NextFig, NextCol, lvl = 1;
+        public int color, figura, forma, formaAnt, NextFig, NextCol;
         Texture2D texture;
         KeyboardState kb, kbAnt;
         public Vector2 position = new Vector2(3, 2);
@@ -217,7 +217,7 @@ namespace Tetris.Piezas
             }
         }
 
-        public bool Update(GameTime gameTime) {
+        public bool Update(GameTime gameTime, int lvl) {
             time += gameTime.ElapsedGameTime.Milliseconds;
             timeD += gameTime.ElapsedGameTime.Milliseconds;
             timeA += gameTime.ElapsedGameTime.Milliseconds;
@@ -255,7 +255,7 @@ namespace Tetris.Piezas
                         time = 0;
                     }
                 } else {
-                    if (time >= 250 - (lvl * 20)) {
+                    if (time >= 420 - (lvl * 50)) {
                         moveD = true;
                         time = 0;
                     }
