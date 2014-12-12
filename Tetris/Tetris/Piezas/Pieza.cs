@@ -232,10 +232,11 @@ namespace Tetris.Piezas
             if (!moveL && kb.IsKeyDown(Keys.A)) {
                 if (timeA >= 300) moveL = true;  
             } else timeA = 0;
-            if (kb.IsKeyUp(Keys.S)) Banderazo = true;
-            if (kbAnt.IsKeyUp(Keys.S) && kb.IsKeyDown(Keys.S) && Enabled && Banderazo) toBottom = true;
-            if (kbAnt.IsKeyUp(Keys.Space) && kb.IsKeyDown(Keys.Space) && Enabled) {
-                
+            //if (kb.IsKeyUp(Keys.S)) Banderazo = true;
+            if (/*kbAnt.IsKeyUp(Keys.S) &&*/ kb.IsKeyDown(Keys.S) && Enabled /*&& Banderazo*/) toBottom = true;
+            else toBottom = false;
+            if (kbAnt.IsKeyUp(Keys.Space) && kb.IsKeyDown(Keys.Space) && Enabled ) {
+                toBottom = true;
             }
                 
             kbAnt = kb;
