@@ -13,7 +13,7 @@ namespace Tetris.Table
     {
         Texture2D fondo, marco, Ama, Azul, Rojo, Mora, Ver, Cel, Nar;
         SpriteFont Arial;
-        int fr, fl, fd, ff, pIguales, ultI = 0, color, NextColor, puntos, filasMult, filasTot, lvl;
+        int fr, fl, fd, ff, pIguales, ultI = 0, color, NextColor, puntos, filasMult, filasTot, lvl = 1;
         char[,] NextFig;
         bool qPieza;
         Vector2 posNextP = new Vector2(365, 60);
@@ -93,7 +93,7 @@ namespace Tetris.Table
         public void Update(Pieza p) {
             NextFig = p.NEXT_FIG;
             NextColor = p.NextCol;
-
+            //lvl = p.lvl;
             #region Cambio de forma
             if (p.cReq && !p.toBottom) {
                 for (int i = 0; i < 5; i++) {
@@ -184,9 +184,9 @@ namespace Tetris.Table
                     if (pIguales == 10) {
                         filasMult++;
                         filasTot++;
-                        if (filasTot >= 5) {
-                            p.lvl++;
-                            lvl = p.lvl;
+                        if (filasTot >= 3) {
+                            lvl++;                          
+                            filasTot = 0;
                         }
                         break;
                     }        
