@@ -18,7 +18,7 @@ namespace Tetris.Piezas
         public char[,] NEXT_FORM = new char[5, 5];
         public char[,] NEXT_FIG = new char[5, 5];
         float time, timeD, timeA;
-        public bool Enabled = true, moveR, moveL, moveD, toBottom, Banderazo, cReq;
+        public bool Enabled = true, moveR, moveL, moveD, toBottom, Banderazo, cReq;//, flippingOut;
 
         #region FIGURA I | 1
         char[,,] FIGURA_I = new char[2, 5, 5] {
@@ -222,7 +222,7 @@ namespace Tetris.Piezas
             timeD += gameTime.ElapsedGameTime.Milliseconds;
             timeA += gameTime.ElapsedGameTime.Milliseconds;
             kb = Keyboard.GetState();
-            if (kbAnt.IsKeyUp(Keys.Space) && kb.IsKeyDown(Keys.Space) && Enabled) cReq = true;
+            if (kbAnt.IsKeyUp(Keys.W) && kb.IsKeyDown(Keys.W) && Enabled) cReq = true;
             if (kbAnt.IsKeyUp(Keys.D) && kb.IsKeyDown(Keys.D) && Enabled) moveR = true;
             if (!moveR && kb.IsKeyDown(Keys.D)) {
                 if (timeD >= 300) moveR = true;
@@ -234,6 +234,9 @@ namespace Tetris.Piezas
             } else timeA = 0;
             if (kb.IsKeyUp(Keys.S)) Banderazo = true;
             if (kbAnt.IsKeyUp(Keys.S) && kb.IsKeyDown(Keys.S) && Enabled && Banderazo) toBottom = true;
+            if (kbAnt.IsKeyUp(Keys.Space) && kb.IsKeyDown(Keys.Space) && Enabled) {
+                
+            }
                 
             kbAnt = kb;
             if (figura <= 3 && forma > 1) forma = 0;

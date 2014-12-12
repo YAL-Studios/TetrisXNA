@@ -72,9 +72,8 @@ namespace Tetris
                 
                 kbAnt = kb;
                 if (Land) {
-
-                        p = new Pieza(NextFig, r.Next(1, 8));
-                        NextFig = p.NextFig;
+                    p = new Pieza(NextFig, r.Next(1, 8));
+                    NextFig = p.NextFig;
                     p.LoadContent(Content);
                 }
                 Land = p.Update(gameTime);
