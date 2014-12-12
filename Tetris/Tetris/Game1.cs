@@ -31,7 +31,7 @@ namespace Tetris
 
         public Game1 () {
             graphics = new GraphicsDeviceManager(this);
-            graphics.PreferredBackBufferWidth = 584;
+            graphics.PreferredBackBufferWidth = 574;
             graphics.PreferredBackBufferHeight = 704;
             Content.RootDirectory = "Content";
         }
@@ -73,7 +73,6 @@ namespace Tetris
                 kbAnt = kb;
                 if (Land) {
                     if (FirstBanderazo) {
-
                         FirstBanderazo = false;
                     } else {
                         p = new Pieza(NextFig, r.Next(1, 8));
@@ -98,7 +97,7 @@ namespace Tetris
 
         //Dibujar
         protected override void Draw(GameTime gameTime) {
-            GraphicsDevice.Clear(Color.Gray);
+            GraphicsDevice.Clear(Color.Black);
             spriteBatch.Begin();
             t.Draw(spriteBatch);
             if (!Land)

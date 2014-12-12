@@ -15,6 +15,7 @@ namespace Tetris.Table
         int fr, fl, fd, ff, pIguales, ultI = 0, color, NextColor;
         char[,] NextFig;
         bool qPieza;
+        Vector2 posNextP = new Vector2(365, 60);
         char[,] tablero = new char[27, 12] { 
         #region Inicializacion del tablero
         {'U', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'U'},
@@ -46,6 +47,31 @@ namespace Tetris.Table
         {'U', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'U'},
         #endregion
         };
+        char[,] HUD = new char[22, 7] {
+            {'X', 'F', 'F', 'F', 'F','F', 'F'},
+            {'X', 'X', 'X', 'X', 'X','X', 'F'},
+            {'X', 'X', 'X', 'X', 'X','X', 'F'},
+            {'X', 'X', 'X', 'X', 'X','X', 'F'},
+            {'X', 'X', 'X', 'X', 'X','X', 'F'},
+            {'X', 'X', 'X', 'X', 'X','X', 'F'},
+            {'X', 'X', 'X', 'X', 'X','X', 'F'},
+            {'X', 'X', 'X', 'X', 'X','X', 'F'},
+            {'X', 'F', 'F', 'F', 'F','F', 'F'},
+            {'X', 'X', 'X', 'X', 'X','X', 'F'},
+            {'X', 'X', 'X', 'X', 'X','X', 'F'},
+            {'X', 'X', 'X', 'X', 'X','X', 'F'},
+            {'X', 'X', 'X', 'X', 'X','X', 'F'},
+            {'X', 'X', 'X', 'X', 'X','X', 'F'},
+            {'X', 'X', 'X', 'X', 'X','X', 'F'},
+            {'X', 'X', 'X', 'X', 'X','X', 'F'},
+            {'X', 'X', 'X', 'X', 'X','X', 'F'},
+            {'X', 'X', 'X', 'X', 'X','X', 'F'},
+            {'X', 'X', 'X', 'X', 'X','X', 'F'},
+            {'X', 'X', 'X', 'X', 'X','X', 'F'},
+            {'X', 'X', 'X', 'X', 'X','X', 'F'},
+            {'X', 'F', 'F', 'F', 'F','F', 'F'},
+        };
+        
 
         public Tablero() {
         }
@@ -67,7 +93,7 @@ namespace Tetris.Table
             NextColor = p.NextCol;
 
             #region Cambio de forma
-            if (p.cReq && !p.toBottom) {
+            if (p.cReq && !p.toBottom && !p.moveD && !p.moveL) {
                 for (int i = 0; i < 5; i++) {
                     for (int j = 0; j < 5; j++) {
                         if ((i + (int)p.position.X) > 0) {
@@ -114,7 +140,7 @@ namespace Tetris.Table
             }
             #endregion
             #region Movimiento X
-            if ((p.moveR || p.moveL) && !p.toBottom) {
+            if ((p.moveR || p.moveL) && !p.toBottom && !p.cReq) {
                 for (int i = 0; i < 5; i++) {
                     for (int j = 0; j < 5; j++) {
                         if (p.FIGURA_SELECT[i, j] == 'I') {
@@ -191,8 +217,8 @@ namespace Tetris.Table
             return false;
         }
 
-        public void Draw (SpriteBatch spriteBatch)
-        {
+        public void Draw (SpriteBatch spriteBatch) {
+            #region Dibujar shits
             for (int i = 5; i < 27; i++) {
                 for (int j = 0; j < 12; j++) {
                     if (tablero[i, j] == 'X') {
@@ -218,36 +244,46 @@ namespace Tetris.Table
 
                 }
             }
+            #endregion
+            #region JUD
+            for (int i = 0; i < 22; i++) {
+                for (int j = 0; j < 7; j++) {
+                    if (HUD[i, j] == 'F') {
+                        spriteBatch.Draw(marco, new Vector2(32 * (j + 11), 32 * (i)), Color.White);
+                    }
+                }
+            }
             for (int i = 0; i < 5; i++) {
                 for (int j = 0; j < 5; j++) {
                     if (NextFig[i, j] == 'I') {
                         switch (NextColor) {
                             case 7:
-                                spriteBatch.Draw(Ama, new Vector2(400 + (32 * i), 100 + (32 * j)), Color.White);
+                                spriteBatch.Draw(Ama, new Vector2(posNextP.X + (32 * i), posNextP.Y + (32 * j)), Color.White);
                                 break;
                             case 6:
-                                spriteBatch.Draw(Azul, new Vector2(400 + (32 * i), 100 + (32 * j)), Color.White);
+                                spriteBatch.Draw(Azul, new Vector2(posNextP.X + (32 * i), posNextP.Y + (32 * j)), Color.White);
                                 break;
                             case 4:
-                                spriteBatch.Draw(Mora, new Vector2(400 + (32 * i), 100 + (32 * j)), Color.White);
+                                spriteBatch.Draw(Mora, new Vector2(posNextP.X + (32 * i), posNextP.Y + (32 * j)), Color.White);
                                 break;
                             case 3:
-                                spriteBatch.Draw(Rojo, new Vector2(400 + (32 * i), 100 + (32 * j)), Color.White);
+                                spriteBatch.Draw(Rojo, new Vector2(posNextP.X + (32 * i), posNextP.Y + (32 * j)), Color.White);
                                 break;
                             case 2:
-                                spriteBatch.Draw(Ver, new Vector2(400 + (32 * i), 100 + (32 * j)), Color.White);
+                                spriteBatch.Draw(Ver, new Vector2(posNextP.X + (32 * i), posNextP.Y + (32 * j)), Color.White);
                                 break;
                             case 5:
-                                spriteBatch.Draw(Nar, new Vector2(400 + (32 * i), 100 + (32 * j)), Color.White);
+                                spriteBatch.Draw(Nar, new Vector2(posNextP.X + (32 * i), posNextP.Y + (32 * j)), Color.White);
                                 break;
                             case 1:
-                                spriteBatch.Draw(Cel, new Vector2(400 + (32 * i), 100 + (32 * j)), Color.White);
+                                spriteBatch.Draw(Cel, new Vector2(posNextP.X + (32 * i), posNextP.Y + (32 * j)), Color.White);
                                 break;
                         }
                     }
                 }
             }
-            
+            #endregion
+
         }
 
         void CopyTo(int _color, char[,] fig, Vector2 pos) {
