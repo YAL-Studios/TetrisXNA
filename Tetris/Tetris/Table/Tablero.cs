@@ -93,7 +93,7 @@ namespace Tetris.Table
             NextColor = p.NextCol;
 
             #region Cambio de forma
-            if (p.cReq && !p.toBottom && !p.moveD && !p.moveL) {
+            if (p.cReq && !p.toBottom) {
                 for (int i = 0; i < 5; i++) {
                     for (int j = 0; j < 5; j++) {
                         if ((i + (int)p.position.X) > 0) {
@@ -140,7 +140,7 @@ namespace Tetris.Table
             }
             #endregion
             #region Movimiento X
-            if ((p.moveR || p.moveL) && !p.toBottom && !p.cReq) {
+            if ((p.moveR || p.moveL) && !p.cReq) {
                 for (int i = 0; i < 5; i++) {
                     for (int j = 0; j < 5; j++) {
                         if (p.FIGURA_SELECT[i, j] == 'I') {
