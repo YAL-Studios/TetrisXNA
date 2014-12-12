@@ -10,11 +10,12 @@ using System.Text;
 namespace Tetris.Piezas
 {
     public class Pieza {
-        public int color, figura, forma, formaAnt;
+        public int color, figura, forma, formaAnt, NextFig, NextCol;
         Texture2D texture;
         KeyboardState kb, kbAnt;
         public Vector2 position = new Vector2(3, 2);
         public char[,] FIGURA_SELECT = new char[5, 5];
+        public char[,] NEXT_FORM = new char[5, 5];
         public char[,] NEXT_FIG = new char[5, 5];
         float time, timeD, timeA;
         public bool Enabled = true, moveR, moveL, moveD, toBottom, Banderazo, cReq;
@@ -181,10 +182,13 @@ namespace Tetris.Piezas
         #endregion
         
 
-        public Pieza(int _figura) {
+        public Pieza(int _figura, int nextFig) {
+            NextCol = NextFig = nextFig;
             color = figura = _figura;
-            CopyMatrix();
-            TMatrix();
+            CopyMatrix(figura, FIGURA_SELECT);
+            TMatrix(FIGURA_SELECT);
+            CopyMatrix(nextFig, NEXT_FIG);
+            TMatrix(NEXT_FIG);
         }
 
         public void LoadContent(ContentManager Content) {
@@ -235,8 +239,8 @@ namespace Tetris.Piezas
             if (figura <= 3 && forma > 1) forma = 0;
             if (figura <= 6 && forma > 3) forma = 0;
             if (forma != formaAnt) {
-                CopyMatrix();
-                TMatrix();
+                CopyMatrix(figura, FIGURA_SELECT);
+                TMatrix(FIGURA_SELECT);
             }
             formaAnt = forma;
 
@@ -269,55 +273,55 @@ namespace Tetris.Piezas
             }
         }
 
-        void TMatrix() {
+        void TMatrix(char[,] matrix) {
             for (int i = 0; i < 5; i++) {
                 for (int j = i; j < 5; j++) {
                     char temp;
-                    temp = FIGURA_SELECT[i, j];
-                    FIGURA_SELECT[i, j] = FIGURA_SELECT[j, i];
-                    FIGURA_SELECT[j, i] = temp;
+                    temp = matrix[i, j];
+                    matrix[i, j] = matrix[j, i];
+                    matrix[j, i] = temp;
                 }
             }
         }
 
-        void CopyMatrix() {
+        void CopyMatrix(int fig, char[,] matrix) {
             int f;
             for (int i = 0; i < 5; i++) {
                 for (int j = 0; j < 5; j++) {
-                    switch (figura) { 
+                    switch (fig) { 
                         case 1: // 2
-                            FIGURA_SELECT[i, j] = FIGURA_I[forma, i, j];
+                            matrix[i, j] = FIGURA_I[forma, i, j];
                             f = forma > 0 ? 0 : 1;
-                            NEXT_FIG[i, j] = FIGURA_I[f, i, j];
+                            NEXT_FORM[i, j] = FIGURA_I[f, i, j];
                             break;
                         case 2:
-                            FIGURA_SELECT[i, j] = FIGURA_S[forma, i, j];
+                            matrix[i, j] = FIGURA_S[forma, i, j];
                             f = forma > 0 ? 0 : 1;
-                            NEXT_FIG[i, j] = FIGURA_S[f, i, j];
+                            NEXT_FORM[i, j] = FIGURA_S[f, i, j];
                             break;
                         case 3:
-                            FIGURA_SELECT[i, j] = FIGURA_Z[forma, i, j];
+                            matrix[i, j] = FIGURA_Z[forma, i, j];
                             f = forma > 0 ? 0 : 1;
-                            NEXT_FIG[i, j] = FIGURA_Z[f, i, j];
+                            NEXT_FORM[i, j] = FIGURA_Z[f, i, j];
                             break;
                         case 4:
-                            FIGURA_SELECT[i, j] = FIGURA_T[forma, i, j];
+                            matrix[i, j] = FIGURA_T[forma, i, j];
                             f = forma > 2 ? 0 : forma + 1;
-                            NEXT_FIG[i, j] = FIGURA_T[f, i, j];
+                            NEXT_FORM[i, j] = FIGURA_T[f, i, j];
                             break;
                         case 5:
-                            FIGURA_SELECT[i, j] = FIGURA_L[forma, i, j];
+                            matrix[i, j] = FIGURA_L[forma, i, j];
                             f = forma > 2 ? 0 : forma + 1;
-                            NEXT_FIG[i, j] = FIGURA_L[f, i, j];
+                            NEXT_FORM[i, j] = FIGURA_L[f, i, j];
                             break;
                         case 6:
-                            FIGURA_SELECT[i, j] = FIGURA_J[forma, i, j];
+                            matrix[i, j] = FIGURA_J[forma, i, j];
                             f = forma > 2 ? 0 : forma + 1;
-                            NEXT_FIG[i, j] = FIGURA_J[f, i, j];
+                            NEXT_FORM[i, j] = FIGURA_J[f, i, j];
                             break;
                         case 7:
-                            FIGURA_SELECT[i, j] = FIGURA_O[i, j];
-                            NEXT_FIG[i, j] = FIGURA_O[i, j];
+                            matrix[i, j] = FIGURA_O[i, j];
+                            NEXT_FORM[i, j] = FIGURA_O[i, j];
                             break;
                     }
                 }   

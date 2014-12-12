@@ -12,8 +12,8 @@ namespace Tetris.Table
     public class Tablero
     {
         Texture2D fondo, marco, Ama, Azul, Rojo, Mora, Ver, Cel, Nar;
-        int fr, fl, fd, ff, pIguales, ultI = 0, color;
-        Vector2 colPos;
+        int fr, fl, fd, ff, pIguales, ultI = 0, color, NextColor;
+        char[,] NextFig;
         bool qPieza;
         char[,] tablero = new char[27, 12] { 
         #region Inicializacion del tablero
@@ -63,13 +63,14 @@ namespace Tetris.Table
         }
 
         public void Update(Pieza p) {
-
+            NextFig = p.NEXT_FIG;
+            NextColor = p.NextCol;
             #region Cambio de forma
             if (p.cReq && !p.toBottom) {
                 for (int i = 0; i < 5; i++) {
                     for (int j = 0; j < 5; j++) {
                         if ((i + (int)p.position.X) > 0) {
-                            if (p.NEXT_FIG[j, i] == 'I') {
+                            if (p.NEXT_FORM[j, i] == 'I') {
                                 if (tablero[(j + (int)p.position.Y), (i + (int)p.position.X)] == 'X') {
                                     ff++;
                                 }
@@ -199,16 +200,54 @@ namespace Tetris.Table
                     if (tablero[i, j] == 'U' || tablero[i, j] == 'F') {
                         spriteBatch.Draw(marco, new Vector2(32 * j, 32 * (i - 5)), Color.White);
                     }
-                    if (tablero[i, j] == '1') spriteBatch.Draw(Cel, new Vector2(32 * j, 32 * (i - 5)), Color.White);
-                    if (tablero[i, j] == '2') spriteBatch.Draw(Ver, new Vector2(32 * j, 32 * (i - 5)), Color.White);
-                    if (tablero[i, j] == '3') spriteBatch.Draw(Rojo, new Vector2(32 * j, 32 * (i - 5)), Color.White);
-                    if (tablero[i, j] == '4') spriteBatch.Draw(Mora, new Vector2(32 * j, 32 * (i - 5)), Color.White);
-                    if (tablero[i, j] == '5') spriteBatch.Draw(Nar, new Vector2(32 * j, 32 * (i - 5)), Color.White);
-                    if (tablero[i, j] == '6') spriteBatch.Draw(Azul, new Vector2(32 * j, 32 * (i - 5)), Color.White);
-                    if (tablero[i, j] == '7') spriteBatch.Draw(Ama, new Vector2(32 * j, 32 * (i - 5)), Color.White);
-                    
+                    if (tablero[i, j] == '1')
+                        spriteBatch.Draw(Cel, new Vector2(32 * j, 32 * (i - 5)), Color.White);
+                    if (tablero[i, j] == '2')
+                        spriteBatch.Draw(Ver, new Vector2(32 * j, 32 * (i - 5)), Color.White);
+                    if (tablero[i, j] == '3')
+                        spriteBatch.Draw(Rojo, new Vector2(32 * j, 32 * (i - 5)), Color.White);
+                    if (tablero[i, j] == '4')
+                        spriteBatch.Draw(Mora, new Vector2(32 * j, 32 * (i - 5)), Color.White);
+                    if (tablero[i, j] == '5')
+                        spriteBatch.Draw(Nar, new Vector2(32 * j, 32 * (i - 5)), Color.White);
+                    if (tablero[i, j] == '6')
+                        spriteBatch.Draw(Azul, new Vector2(32 * j, 32 * (i - 5)), Color.White);
+                    if (tablero[i, j] == '7')
+                        spriteBatch.Draw(Ama, new Vector2(32 * j, 32 * (i - 5)), Color.White);
+
                 }
             }
+            for (int i = 0; i < 5; i++) {
+                for (int j = 0; j < 5; j++) {
+                    if (NextFig[i, j] == 'I') {
+                        switch (NextColor) {
+                            case 7:
+                                spriteBatch.Draw(Ama, new Vector2(400 + (32 * i), 100 + (32 * j)), Color.White);
+                                break;
+                            case 6:
+                                spriteBatch.Draw(Azul, new Vector2(400 + (32 * i), 100 + (32 * j)), Color.White);
+                                break;
+                            case 4:
+                                spriteBatch.Draw(Mora, new Vector2(400 + (32 * i), 100 + (32 * j)), Color.White);
+                                break;
+                            case 3:
+                                spriteBatch.Draw(Rojo, new Vector2(400 + (32 * i), 100 + (32 * j)), Color.White);
+                                break;
+                            case 2:
+                                spriteBatch.Draw(Ver, new Vector2(400 + (32 * i), 100 + (32 * j)), Color.White);
+                                break;
+                            case 5:
+                                spriteBatch.Draw(Nar, new Vector2(400 + (32 * i), 100 + (32 * j)), Color.White);
+                                break;
+                            case 1:
+                                spriteBatch.Draw(Cel, new Vector2(400 + (32 * i), 100 + (32 * j)), Color.White);
+                                break;
+                        }
+                        
+                    }
+                }
+            }
+            
         }
 
         void CopyTo(int _color, char[,] fig, Vector2 pos) {

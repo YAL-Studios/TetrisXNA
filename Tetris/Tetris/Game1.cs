@@ -23,11 +23,12 @@ namespace Tetris
         //Puedes rotar la figura presionando D
         Tablero t = new Tablero();
         Random r;
-        bool Land = true, gameOver = false;
+        bool Land = true, gameOver, FirstBanderazo = true;
+        int NextFig;
 
         public Game1 () {
             graphics = new GraphicsDeviceManager(this);
-            graphics.PreferredBackBufferWidth = 384;
+            graphics.PreferredBackBufferWidth = 584;
             graphics.PreferredBackBufferHeight = 704;
             Content.RootDirectory = "Content";
         }
@@ -53,8 +54,15 @@ namespace Tetris
             if (!gameOver) { 
 
                 if (Land) {
-                    r = new Random();              
-                    p = new Pieza(r.Next(1, 8));
+                    if (FirstBanderazo) {
+                        r = new Random();
+                        p = new Pieza(r.Next(1, 8), r.Next(1, 8));
+                        NextFig = p.NextFig;
+                        FirstBanderazo = false;
+                    } else {
+                        p = new Pieza(NextFig, r.Next(1, 8));
+                        NextFig = p.NextFig;
+                    }
                     p.LoadContent(Content);
                 }
                 Land = p.Update(gameTime);
