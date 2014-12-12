@@ -17,7 +17,7 @@ namespace Tetris.Piezas
         public char[,] FIGURA_SELECT = new char[5, 5];
         public char[,] NEXT_FIG = new char[5, 5];
         float time, timeD, timeA;
-        public bool Enabled = true, moveR, moveL, moveD, toBottom, cReq;
+        public bool Enabled = true, moveR, moveL, moveD, toBottom, Banderazo, cReq;
 
         #region FIGURA I | 1
         char[,,] FIGURA_I = new char[2, 5, 5] {
@@ -228,8 +228,8 @@ namespace Tetris.Piezas
             if (!moveL && kb.IsKeyDown(Keys.A)) {
                 if (timeA >= 300) moveL = true;  
             } else timeA = 0;
-
-            if (kbAnt.IsKeyUp(Keys.S) && kb.IsKeyDown(Keys.S) && Enabled) toBottom = true;
+            if (kb.IsKeyUp(Keys.S)) Banderazo = true;
+            if (kbAnt.IsKeyUp(Keys.S) && kb.IsKeyDown(Keys.S) && Enabled && Banderazo) toBottom = true;
                 
             kbAnt = kb;
             if (figura <= 3 && forma > 1) forma = 0;
