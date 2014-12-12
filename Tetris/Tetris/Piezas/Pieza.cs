@@ -10,7 +10,7 @@ using System.Text;
 namespace Tetris.Piezas
 {
     public class Pieza {
-        public int color, figura, forma, formaAnt, NextFig, NextCol;
+        public int color, figura, forma, formaAnt, NextFig, NextCol, lvl = 1;
         Texture2D texture;
         KeyboardState kb, kbAnt;
         public Vector2 position = new Vector2(3, 2);
@@ -236,7 +236,7 @@ namespace Tetris.Piezas
             if (/*kbAnt.IsKeyUp(Keys.S) &&*/ kb.IsKeyDown(Keys.S) && Enabled /*&& Banderazo*/) toBottom = true;
             else toBottom = false;
             if (kbAnt.IsKeyUp(Keys.Space) && kb.IsKeyDown(Keys.Space) && Enabled ) {
-                toBottom = true;
+                //toBottom = true;
             }
                 
             kbAnt = kb;
@@ -255,7 +255,7 @@ namespace Tetris.Piezas
                         time = 0;
                     }
                 } else {
-                    if (time >= 500) {
+                    if (time >= 250 - (lvl * 20)) {
                         moveD = true;
                         time = 0;
                     }

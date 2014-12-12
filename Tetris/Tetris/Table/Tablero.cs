@@ -13,7 +13,7 @@ namespace Tetris.Table
     {
         Texture2D fondo, marco, Ama, Azul, Rojo, Mora, Ver, Cel, Nar;
         SpriteFont Arial;
-        int fr, fl, fd, ff, pIguales, ultI = 0, color, NextColor, puntos, filas;
+        int fr, fl, fd, ff, pIguales, ultI = 0, color, NextColor, puntos, filasMult, filasTot, lvl;
         char[,] NextFig;
         bool qPieza;
         Vector2 posNextP = new Vector2(365, 60);
@@ -182,7 +182,12 @@ namespace Tetris.Table
                         }
                     }
                     if (pIguales == 10) {
-                        filas++;
+                        filasMult++;
+                        filasTot++;
+                        if (filasTot >= 5) {
+                            p.lvl++;
+                            lvl = p.lvl;
+                        }
                         break;
                     }        
                 }
@@ -201,8 +206,8 @@ namespace Tetris.Table
                     }
                     if (ultI == 25) {
                         qPieza = false;
-                        puntos += (100 * filas);
-                        filas = 0;
+                        puntos += (1000 * filasMult) * p.lvl;
+                        filasMult = 0;
                     }
                 }
                 ultI = 0; 
@@ -260,6 +265,7 @@ namespace Tetris.Table
             }
             spriteBatch.DrawString(Arial, "Puntosetes:", new Vector2(400, 330), Color.White);
             spriteBatch.DrawString(Arial, puntos.ToString(), new Vector2(400, 360), Color.White);
+            spriteBatch.DrawString(Arial, lvl.ToString(), new Vector2(400, 390), Color.White);
             for (int i = 0; i < 5; i++) {
                 for (int j = 0; j < 5; j++) {
                     if (NextFig[i, j] == 'I') {
