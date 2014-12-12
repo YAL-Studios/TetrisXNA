@@ -24,6 +24,9 @@ namespace Tetris
         Tablero t = new Tablero();
         Random r;
         bool Land = true, gameOver = false;
+        KeyboardState kb, kbAnt;
+        
+        Song music;
 
         public Game1 () {
             graphics = new GraphicsDeviceManager(this);
@@ -40,8 +43,13 @@ namespace Tetris
         //Cargar contenido
         protected override void LoadContent() {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            
+            music = Content.Load<Song>("Canciones/Theme B");
             t.LoadContent(Content);
+
+            MediaPlayer.IsRepeating = true;
+            MediaPlayer.Play(music);
+            MediaPlayer.Volume = 0.05f;
+            
         }
 
         //Descargar contenido
@@ -50,18 +58,27 @@ namespace Tetris
 
         //Actualizar
         protected override void Update (GameTime gameTime) {
-            if (!gameOver) { 
+            if (!gameOver) {
 
+                kb = Keyboard.GetState();
+                if (kbAnt.IsKeyUp(Keys.M) && kb.IsKeyDown(Keys.M)) MediaPlayer.IsMuted = !MediaPlayer.IsMuted;
+                if (kbAnt.IsKeyUp(Keys.PageUp) && kb.IsKeyDown(Keys.PageUp)) MediaPlayer.Volume += 0.01f;
+                if (kbAnt.IsKeyUp(Keys.PageDown) && kb.IsKeyDown(Keys.PageDown)) MediaPlayer.Volume -= 0.01f;
+                
+                kbAnt = kb;
                 if (Land) {
                     r = new Random();              
                     p = new Pieza(r.Next(1, 8));
                     p.LoadContent(Content);
                 }
                 Land = p.Update(gameTime);
+
                 t.Update(p);
                 if (t.GameOver())
                     gameOver = true;
-               
+
+
+
                 base.Update(gameTime);
             } else {
                 Exit();
