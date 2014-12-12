@@ -13,11 +13,11 @@ namespace Tetris.Piezas
         public int color, figura, forma, formaAnt;
         Texture2D texture;
         KeyboardState kb, kbAnt;
-        public Vector2 position = new Vector2(4, 0);
+        public Vector2 position = new Vector2(1, 0);
         public char[,] FIGURA_SELECT = new char[5, 5];
         public char[,] NEXT_FIG = new char[5, 5];
         float time;
-        public bool Enabled = true, FR = true, FL = true, cReq;
+        public bool Enabled = true, moveR, moveL, moveD, cReq;
 
         #region FIGURA I | 1
         char[,,] FIGURA_I = new char[2, 5, 5] {
@@ -210,13 +210,12 @@ namespace Tetris.Piezas
 
         public bool Update(GameTime gameTime) {
             kb = Keyboard.GetState();
-            if (kbAnt.IsKeyUp(Keys.Space) && kb.IsKeyDown(Keys.Space) && Enabled) forma+=1; //cReq = true;
-            if (kbAnt.IsKeyUp(Keys.D) && kb.IsKeyDown(Keys.D) && Enabled && FR) {
-                position.X++;
+            if (kbAnt.IsKeyUp(Keys.Space) && kb.IsKeyDown(Keys.Space) && Enabled) cReq = true;
+            if (kbAnt.IsKeyUp(Keys.D) && kb.IsKeyDown(Keys.D) && Enabled) {
+                moveR = true;
             }
-            if (kbAnt.IsKeyUp(Keys.A) && kb.IsKeyDown(Keys.A) && Enabled && FL) {
-                if (position.X > -1)
-                position.X--;
+            if (kbAnt.IsKeyUp(Keys.A) && kb.IsKeyDown(Keys.A) && Enabled) {
+                moveL = true;
             } 
             kbAnt = kb;
             if (figura <= 3 && forma > 1) forma = 0;
@@ -227,11 +226,9 @@ namespace Tetris.Piezas
             }
             formaAnt = forma;
 
-            
-
             time += gameTime.ElapsedGameTime.Milliseconds;
             if (time >= 200 && Enabled) {
-                position.Y += 1;
+                moveD = true;
                 time = 0;
             }
             if (!Enabled) return true;
@@ -243,7 +240,7 @@ namespace Tetris.Piezas
             for (int i = 0; i < 5; i++) {
                 for (int j = 0; j < 5; j++) {
                     if (FIGURA_SELECT[i, j] == 'I' && Enabled) {
-                        spriteBatch.Draw(texture, new Vector2(32 * (i + position.X), 32 * (j + position.Y)), Color.White);
+                        spriteBatch.Draw(texture, new Vector2(32 * (i + position.X),32 * ((j - 5) + position.Y)), Color.White);
                     }
                 }
             }
