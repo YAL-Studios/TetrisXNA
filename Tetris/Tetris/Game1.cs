@@ -23,8 +23,12 @@ namespace Tetris
         //Puedes rotar la figura presionando D
         Tablero t = new Tablero();
         Random r;
+        bool Land = true, gameOver = false;
+        KeyboardState kb, kbAnt;
         bool Land = true, gameOver, FirstBanderazo = true;
         int NextFig;
+
+        Song music;
 
         public Game1 () {
             graphics = new GraphicsDeviceManager(this);
@@ -41,8 +45,13 @@ namespace Tetris
         //Cargar contenido
         protected override void LoadContent() {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            
+            music = Content.Load<Song>("Canciones/Theme B");
             t.LoadContent(Content);
+
+            MediaPlayer.IsRepeating = true;
+            MediaPlayer.Play(music);
+            MediaPlayer.Volume = 0.05f;
+            
         }
 
         //Descargar contenido
@@ -53,9 +62,15 @@ namespace Tetris
         protected override void Update (GameTime gameTime) {
             if (!gameOver) { 
 
+                kb = Keyboard.GetState();
+                if (kbAnt.IsKeyUp(Keys.M) && kb.IsKeyDown(Keys.M)) MediaPlayer.IsMuted = !MediaPlayer.IsMuted;
+                if (kbAnt.IsKeyUp(Keys.PageUp) && kb.IsKeyDown(Keys.PageUp)) MediaPlayer.Volume += 0.01f;
+                if (kbAnt.IsKeyUp(Keys.PageDown) && kb.IsKeyDown(Keys.PageDown)) MediaPlayer.Volume -= 0.01f;
+                
+                kbAnt = kb;
                 if (Land) {
                     if (FirstBanderazo) {
-                        r = new Random();
+                    r = new Random();              
                         p = new Pieza(r.Next(1, 8), r.Next(1, 8));
                         NextFig = p.NextFig;
                         FirstBanderazo = false;
@@ -66,10 +81,13 @@ namespace Tetris
                     p.LoadContent(Content);
                 }
                 Land = p.Update(gameTime);
+
                 t.Update(p);
                 if (t.GameOver())
                     gameOver = true;
                
+
+
                 base.Update(gameTime);
             } else {
                 Exit();
