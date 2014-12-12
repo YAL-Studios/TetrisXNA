@@ -61,7 +61,7 @@ namespace Tetris.Table
 
         public void Update(Pieza p) {
             #region Cambio de forma
-            if (p.cReq) {
+            if (p.cReq && !p.toBottom) {
                 for (int i = 0; i < 5; i++) {
                     for (int j = 0; j < 5; j++) {
                         if ((i + (int)p.position.X) > 0) {
@@ -107,7 +107,7 @@ namespace Tetris.Table
             }
             #endregion
             #region Movimiento X
-            if (p.moveR || p.moveL) {
+            if ((p.moveR || p.moveL) && !p.toBottom) {
                 for (int i = 0; i < 5; i++) {
                     for (int j = 0; j < 5; j++) {
                         if (p.FIGURA_SELECT[i, j] == 'I') {
@@ -159,11 +159,22 @@ namespace Tetris.Table
                         tablero[i - 1, j] = temp;                   
                     }
                 }
-                if (ultI == 26)
+                if (ultI != 26)
                     goto qPiezas;
             }
             ultI = 0;
             #endregion
+        }
+
+        public bool GameOver () {
+            for (int i = 0; i < 5; i++) {
+                for (int j = 1; j < 11; j++) {
+                    if (tablero[i, j] != 'X') {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
 
         public void Draw (SpriteBatch spriteBatch)

@@ -59,7 +59,9 @@ namespace Tetris
                 }
                 Land = p.Update(gameTime);
                 t.Update(p);
-            
+                if (t.GameOver())
+                    Exit();
+               
                 base.Update(gameTime);
             }
         }
