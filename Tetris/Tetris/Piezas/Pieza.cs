@@ -13,7 +13,7 @@ namespace Tetris.Piezas
         public int color, figura, forma, formaAnt;
         Texture2D texture;
         KeyboardState kb, kbAnt;
-        public Vector2 position = new Vector2(3, 0);
+        public Vector2 position = new Vector2(3, 2);
         public char[,] FIGURA_SELECT = new char[5, 5];
         public char[,] NEXT_FIG = new char[5, 5];
         float time, timeD, timeA;

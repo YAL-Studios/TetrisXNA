@@ -60,10 +60,13 @@ namespace Tetris
                 Land = p.Update(gameTime);
                 t.Update(p);
                 if (t.GameOver())
-                    Exit();
+                    gameOver = true;
                
                 base.Update(gameTime);
+            } else {
+                Exit();
             }
+            
         }
 
         //Dibujar
